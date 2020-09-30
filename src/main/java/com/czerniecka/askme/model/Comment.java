@@ -1,5 +1,6 @@
 package com.czerniecka.askme.model;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Data
 @NoArgsConstructor
 public class Comment {
 
