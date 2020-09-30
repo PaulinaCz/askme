@@ -4,11 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum Rating {
-    VERYPOOR(1),
-    POOR(2),
-    OK(3),
-    GOOD(4),
-    EXCELLENT(5);
+
+    /*
+    * Rating of answers as USEFUL/NOT USEFUL (+1/-1)
+    * To make rankings easier to calculate and present
+    * highest scored answer is voted to be most useful one
+    * lowest scored (below zero is voted to be less useful or not clear
+    * */
+    USEFUL(1),
+    NOTUSEFUL(-1);
     private final int rate;
 
     Rating(int rate) {
