@@ -2,9 +2,11 @@ package com.czerniecka.askme.mapper;
 
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AnswerToShowAnswerDTO {
 
     Optional<ShowAnswerDTO> getAnswerDto(Optional<Answer> answerOptional){

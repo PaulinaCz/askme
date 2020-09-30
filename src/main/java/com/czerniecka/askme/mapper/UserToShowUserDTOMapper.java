@@ -2,9 +2,11 @@ package com.czerniecka.askme.mapper;
 
 import com.czerniecka.askme.dto.ShowUserDTO;
 import com.czerniecka.askme.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserToShowUserDTOMapper {
 
     public Optional<ShowUserDTO> getUserDto(Optional<User> userOptional){

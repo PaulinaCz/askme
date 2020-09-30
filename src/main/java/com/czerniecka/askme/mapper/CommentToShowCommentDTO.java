@@ -2,9 +2,11 @@ package com.czerniecka.askme.mapper;
 
 import com.czerniecka.askme.dto.ShowCommentDTO;
 import com.czerniecka.askme.model.Comment;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class CommentToShowCommentDTO {
 
     Optional<ShowCommentDTO> getCommentDto(Optional<Comment> optionalComment){
