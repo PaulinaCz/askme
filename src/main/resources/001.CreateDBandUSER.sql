@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS askme;
+CREATE USER IF NOT EXISTS 'askme'@'%' IDENTIFIED BY 'askmenow';
+GRANT ALL PRIVILEGES ON askme.* TO 'askme'@'%';
