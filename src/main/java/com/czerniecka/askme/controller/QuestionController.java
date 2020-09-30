@@ -34,6 +34,15 @@ public class QuestionController {
 
     }
 
+    @GetMapping("/forUser/{userId}")
+    public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUserId(@PathVariable UUID userId){
+
+        List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(userId);
+
+        return new ResponseEntity<>(questionsByUser, HttpStatus.OK);
+
+    }
+
     @GetMapping("/allQuestions")
     public ResponseEntity<List<ShowQuestionDTO>> getAllQuestions(){
 

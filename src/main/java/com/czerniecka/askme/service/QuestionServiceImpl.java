@@ -65,4 +65,16 @@ public class QuestionServiceImpl implements QuestionService{
         questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
 
     }
+
+    @Override
+    public List<ShowQuestionDTO> getAllByUser(UUID userId) {
+
+        List<Question> questions = questionRepository.findAll();
+
+        return questions.stream()
+                .filter(question -> question.getFromUser().equals(userId))
+                .map(q -> mapper.getQuestionDto(Optional.of(q)).get())
+                .collect(Collectors.toList());
+
+    }
 }

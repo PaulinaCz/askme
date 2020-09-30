@@ -17,4 +17,6 @@ public interface QuestionService {
     void sendQuestion(AskQuestionDTO questionDTO);
 
     void editQuestion(UUID questionId, AskQuestionDTO questionDTO);
+
+    List<ShowQuestionDTO> getAllByUser(UUID userId);
 }
