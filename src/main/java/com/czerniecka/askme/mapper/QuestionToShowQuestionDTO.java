@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class QuestionToShowQuestionDTO {
 
-    public Optional<ShowQuestionDTO> getQuestionDTO(Optional<Question> questionOptional){
+    public Optional<ShowQuestionDTO> getQuestionDto(Optional<Question> questionOptional){
 
         if(questionOptional.isEmpty()){
             return Optional.empty();
