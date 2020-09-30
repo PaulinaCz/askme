@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserToShowUserDTOMapper {
+public class UserToShowUserDTO {
 
     public Optional<ShowUserDTO> getUserDto(Optional<User> userOptional){
 
