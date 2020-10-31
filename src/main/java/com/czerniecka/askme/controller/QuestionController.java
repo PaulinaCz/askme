@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/question")
@@ -25,7 +24,7 @@ public class QuestionController {
     }
 
     @GetMapping("/{questionId}")
-    public ResponseEntity<ShowQuestionDTO> getQuestionById(@PathVariable UUID questionId){
+    public ResponseEntity<ShowQuestionDTO> getQuestionById(@PathVariable Long questionId){
 
         Optional<ShowQuestionDTO> question = questionService.getById(questionId);
 
@@ -35,7 +34,7 @@ public class QuestionController {
     }
 
     @GetMapping("/forUser/{userId}")
-    public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUserId(@PathVariable UUID userId){
+    public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUserId(@PathVariable Long userId){
 
         List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(userId);
 
@@ -60,7 +59,7 @@ public class QuestionController {
     }
 
     @PutMapping("/editQuestion/{questionId}")
-    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable UUID questionId, @RequestBody AskQuestionDTO questionDTO)
+    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId, @RequestBody AskQuestionDTO questionDTO)
     {
         questionService.editQuestion(questionId, questionDTO);
 

@@ -28,7 +28,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Optional<ShowQuestionDTO> getById(UUID questionId) {
+    public Optional<ShowQuestionDTO> getById(Long questionId) {
         Optional<Question> questionOptional = questionRepository.findById(questionId);
 
         if(questionOptional.isEmpty()){
@@ -58,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public void editQuestion(UUID questionId, AskQuestionDTO questionDTO) {
+    public void editQuestion(Long questionId, AskQuestionDTO questionDTO) {
 
         Question questionToEdit = questionRepository.findById(questionId).get();
 
@@ -68,13 +68,13 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<ShowQuestionDTO> getAllByUser(UUID userId) {
+    public List<ShowQuestionDTO> getAllByUser(Long userId) {
 
         List<Question> questions = questionRepository.findAll();
 
         return questions.stream()
                 .filter(question -> question.getFromUser().equals(userId))
-                .map(q -> mapper.getQuestionDto(Optional.of(q)).get())
+                .map(q ->mapper.getQuestionDto(Optional.of(q)).get())
                 .collect(Collectors.toList());
 
     }
