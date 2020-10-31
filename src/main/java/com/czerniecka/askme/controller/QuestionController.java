@@ -52,12 +52,12 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<AskQuestionDTO> sendQuestion(@RequestBody AskQuestionDTO questionDTO){
-        questionService.sendQuestion(questionDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+    public ResponseEntity<Long> sendQuestion(@RequestBody AskQuestionDTO questionDTO){
 
-    //TODO check if it should return updated object along with status
+        Long questionId = questionService.sendQuestion(questionDTO);
+
+        return new ResponseEntity<>(questionId, HttpStatus.CREATED);
+    }
 
     @PutMapping("/editQuestion/{questionId}")
     public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable UUID questionId, @RequestBody AskQuestionDTO questionDTO)

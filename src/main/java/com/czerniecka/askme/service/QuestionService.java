@@ -14,7 +14,7 @@ public interface QuestionService {
 
     List<ShowQuestionDTO> getAll();
 
-    void sendQuestion(AskQuestionDTO questionDTO);
+    Long sendQuestion(AskQuestionDTO questionDTO);
 
     void editQuestion(UUID questionId, AskQuestionDTO questionDTO);
 
