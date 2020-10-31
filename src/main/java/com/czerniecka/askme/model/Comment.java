@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -14,14 +14,14 @@ import java.util.UUID;
 public class Comment {
 
     @Id
-    private UUID commentId;
-    private UUID answerId;
-    private UUID commentingUserId;
+    @GeneratedValue
+    private Long commentId;
+    private Long answerId;
+    private Long commentingUserId;
     private String body;
     private LocalDateTime dateCommentCreated;
 
-    public Comment(UUID answerId, UUID commentingUserId, String body) {
-        this.commentId = UUID.randomUUID();
+    public Comment(Long answerId, Long commentingUserId, String body) {
         this.answerId = answerId;
         this.commentingUserId = commentingUserId;
         this.body = body;

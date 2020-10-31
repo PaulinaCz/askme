@@ -1,11 +1,9 @@
 package com.czerniecka.askme.dto;
 
-import java.util.UUID;
-
 public class AnswerDTO {
 
-    public UUID answeringUserId;
-    public UUID questionId;
+    public Long answeringUserId;
+    public Long questionId;
     public String body;
 
 }

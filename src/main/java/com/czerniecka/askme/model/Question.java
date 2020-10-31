@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -14,13 +14,13 @@ import java.util.UUID;
 public class Question {
 
     @Id
-    private UUID questionId;
-    private UUID fromUser;
+    @GeneratedValue
+    private Long questionId;
+    private Long fromUser;
     private String body;
     private LocalDateTime timeQuestionAsked;
 
-    public Question(UUID fromUser, String body){
-        questionId = UUID.randomUUID();
+    public Question(Long fromUser, String body){
         this.fromUser = fromUser;
         this.body = body;
         this.timeQuestionAsked = LocalDateTime.now();

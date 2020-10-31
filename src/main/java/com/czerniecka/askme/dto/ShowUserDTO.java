@@ -1,11 +1,10 @@
 package com.czerniecka.askme.dto;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class ShowUserDTO {
 
-    public UUID userId;
+    public Long userId;
     public String name;
     public String surname;
     public String email;

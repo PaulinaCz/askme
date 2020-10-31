@@ -1,10 +1,8 @@
 package com.czerniecka.askme.dto;
 
-import java.util.UUID;
-
 public class WriteCommentDTO {
 
-    public UUID answerId;
-    public UUID commentingUserId;
+    public Long answerId;
+    public Long commentingUserId;
     public String body;
 }

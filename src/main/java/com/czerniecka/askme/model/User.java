@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -14,7 +14,8 @@ import java.util.UUID;
 public class User {
 
     @Id
-    private UUID userId;
+    @GeneratedValue
+    private Long userId;
     private String name;
     private String surname;
     private String email;
@@ -23,7 +24,6 @@ public class User {
     private LocalDateTime dateCreated;
 
     public User(String name, String surname, String email, String password, String username) {
-        userId = UUID.randomUUID();
         this.name = name;
         this.surname = surname;
         this.email = email;

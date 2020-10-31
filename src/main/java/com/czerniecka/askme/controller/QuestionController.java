@@ -57,6 +57,8 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    //TODO check if it should return updated object along with status
+
     @PutMapping("/editQuestion/{questionId}")
     public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable UUID questionId, @RequestBody AskQuestionDTO questionDTO)
     {
