@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class CommentToShowCommentDTO {
 
-    Optional<ShowCommentDTO> getCommentDto(Optional<Comment> optionalComment){
+    public Optional<ShowCommentDTO> getCommentDto(Optional<Comment> optionalComment){
 
         if(optionalComment.isEmpty()){
             return Optional.empty();
