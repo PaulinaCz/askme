@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
         List<User> users = userRepository.findAll();
 
         return users.stream()
-                .map(user -> mapper.getUserDto(Optional.of(user)).get())
+                .map(user -> mapper.getUserDto(Optional.of(user)).orElseThrow())
                 .collect(Collectors.toList());
 
     }

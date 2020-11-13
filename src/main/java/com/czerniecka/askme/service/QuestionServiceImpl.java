@@ -45,7 +45,7 @@ public class QuestionServiceImpl implements QuestionService{
         List<Question> questions = questionRepository.findAll();
 
         return questions.stream()
-                .map(question -> mapper.getQuestionDto(Optional.of(question)).get())
+                .map(question -> mapper.getQuestionDto(Optional.of(question)).orElseThrow())
                 .collect(Collectors.toList());
 
     }
@@ -60,7 +60,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public void editQuestion(Long questionId, AskQuestionDTO questionDTO) {
 
-        Question questionToEdit = questionRepository.findById(questionId).get();
+        Question questionToEdit = questionRepository.findById(questionId).orElseThrow();
 
         questionToEdit.setBody(questionDTO.body);
         questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
@@ -74,7 +74,7 @@ public class QuestionServiceImpl implements QuestionService{
 
         return questions.stream()
                 .filter(question -> question.getFromUser().equals(userId))
-                .map(q ->mapper.getQuestionDto(Optional.of(q)).get())
+                .map(q ->mapper.getQuestionDto(Optional.of(q)).orElseThrow())
                 .collect(Collectors.toList());
 
     }
