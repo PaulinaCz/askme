@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class AnswerServiceImpl implements AnswerService{
 
-    public AnswerRepository answerRepository;
-    public AnswerToShowAnswerDTO mapper;
+    private final AnswerRepository answerRepository;
+    private final AnswerToShowAnswerDTO mapper;
 
     @Autowired
     public AnswerServiceImpl(AnswerRepository answerRepository, AnswerToShowAnswerDTO mapper) {

@@ -13,8 +13,8 @@ import java.util.Optional;
 @Service
 public class CommentServiceImpl implements CommentService{
 
-    public CommentRepository commentRepository;
-    public CommentToShowCommentDTO mapper;
+    private final CommentRepository commentRepository;
+    private final CommentToShowCommentDTO mapper;
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository, CommentToShowCommentDTO mapper) {
