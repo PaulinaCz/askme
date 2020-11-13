@@ -4,6 +4,7 @@ import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
+import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,22 @@ public class AnswerServiceImpl implements AnswerService{
                 .map(a -> mapper.getAnswerDto(Optional.of(a)).orElseThrow())
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public boolean changeRating(Long answerId, Rating rating) {
+
+        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+
+        if(answerOptional.isPresent()){
+            Answer answer = answerOptional.get();
+            Long currentRate = answer.getRating();
+            answer.setRating(currentRate + rating.getRate());
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override

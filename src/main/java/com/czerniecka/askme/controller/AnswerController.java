@@ -2,8 +2,9 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
+import com.czerniecka.askme.model.Answer;
+import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.service.AnswerService;
-import com.czerniecka.askme.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,19 @@ public class AnswerController {
 
         return new ResponseEntity<>(answerId, HttpStatus.CREATED);
 
+    }
+
+    @PutMapping("{questionId}/answer/{answerId}/rating")
+    public ResponseEntity<Void> rate(@PathVariable Long questionId,
+                                     @PathVariable Long answerId,
+                                     @RequestBody Rating rating){
+
+        boolean changed = answerService.changeRating(answerId, rating);
+
+        if(changed){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity("Answer of id" + answerId + "not found", HttpStatus.BAD_REQUEST);
+        }
     }
 }

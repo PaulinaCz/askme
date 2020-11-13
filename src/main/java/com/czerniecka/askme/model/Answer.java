@@ -20,13 +20,14 @@ public class Answer {
     private Long questionId;
     private String body;
     private LocalDateTime dateAnswerGiven;
-    private Rating rating;
+    private Long rating;
 
     public Answer(Long answeringUserId, Long questionId, String body) {
         this.answeringUserId = answeringUserId;
         this.questionId = questionId;
         this.body = body;
         this.dateAnswerGiven = LocalDateTime.now();
-        this.rating = Rating.NOTRATED;
+        this.rating = 0L;
     }
+
 }

@@ -2,6 +2,7 @@ package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
+import com.czerniecka.askme.model.Rating;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface AnswerService {
     Long addAnswer(AnswerDTO answerDTO, Long questionId);
 
     List<ShowAnswerDTO> getAllByQuestionId(Long questionId);
+
+    boolean changeRating(Long answerId, Rating rating);
 }
