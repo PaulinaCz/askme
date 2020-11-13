@@ -11,6 +11,7 @@ public enum Rating {
     * highest scored answer is voted to be most useful one
     * lowest scored (below zero is voted to be less useful or not clear
     * */
+    NOTRATED(0),
     USEFUL(1),
     NOTUSEFUL(-1);
     private final int rate;

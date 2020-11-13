@@ -22,11 +22,11 @@ public class Answer {
     private LocalDateTime dateAnswerGiven;
     private Rating rating;
 
-    public Answer(Long answeringUserId, Long questionId, String body, Rating rating) {
+    public Answer(Long answeringUserId, Long questionId, String body) {
         this.answeringUserId = answeringUserId;
         this.questionId = questionId;
         this.body = body;
         this.dateAnswerGiven = LocalDateTime.now();
-        this.rating = rating;
+        this.rating = Rating.NOTRATED;
     }
 }
