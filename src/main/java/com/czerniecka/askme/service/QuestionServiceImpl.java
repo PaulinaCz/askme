@@ -51,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Long sendQuestion(AskQuestionDTO questionDTO) {
-        Question questionToSend = new Question(questionDTO.fromUser, questionDTO.body);
+        Question questionToSend = new Question(questionDTO.user, questionDTO.body);
 
         return questionRepository.save(questionToSend).getQuestionId();
     }
@@ -72,7 +72,7 @@ public class QuestionServiceImpl implements QuestionService{
         List<Question> questions = questionRepository.findAll();
 
         return questions.stream()
-                .filter(question -> question.getFromUser().equals(userId))
+                .filter(question -> question.getUser().getUserId().equals(userId))
                 .map(q ->mapper.getQuestionDto(Optional.of(q)).orElseThrow())
                 .collect(Collectors.toList());
 

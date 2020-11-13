@@ -1,8 +1,10 @@
 package com.czerniecka.askme.dto;
 
 
+import com.czerniecka.askme.model.User;
+
 public class AskQuestionDTO {
 
-    public Long fromUser;
+    public User user;
     public String body;
 }

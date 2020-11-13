@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Long addComment(WriteCommentDTO writeCommentDTO, Long questionId, Long answerId) {
-        Comment comment = new Comment(writeCommentDTO.answerId, writeCommentDTO.commentingUserId, writeCommentDTO.body);
+        Comment comment = new Comment(writeCommentDTO.user, writeCommentDTO.body);
 
         return commentRepository.save(comment).getCommentId();
     }

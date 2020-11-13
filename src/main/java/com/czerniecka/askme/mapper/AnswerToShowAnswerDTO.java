@@ -18,7 +18,7 @@ public class AnswerToShowAnswerDTO {
             ShowAnswerDTO answerDTO = new ShowAnswerDTO();
 
             answerDTO.answerId = answer.getAnswerId();
-            answerDTO.answeringUserId = answer.getAnsweringUserId();
+            answerDTO.user = answer.getUser();
             answerDTO.questionId = answer.getQuestionId();
             answerDTO.body = answer.getBody();
             answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();

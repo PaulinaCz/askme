@@ -3,11 +3,10 @@ package com.czerniecka.askme.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,18 +16,24 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
-    private Long answeringUserId;
     private Long questionId;
+
+    @ManyToOne
+    private User user;
+
+    @OneToMany
+    private List<Comment> comments;
     private String body;
     private LocalDateTime dateAnswerGiven;
     private Long rating;
 
-    public Answer(Long answeringUserId, Long questionId, String body) {
-        this.answeringUserId = answeringUserId;
+    public Answer(Long questionId, User user, String body) {
         this.questionId = questionId;
+        this.user = user;
         this.body = body;
         this.dateAnswerGiven = LocalDateTime.now();
         this.rating = 0L;
+        this.comments = new ArrayList<>();
     }
 
 }

@@ -4,6 +4,7 @@ import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
+import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Override
     public Long addAnswer(AnswerDTO answerDTO, Long questionId) {
 
-        Answer answer = new Answer(answerDTO.answeringUserId, questionId, answerDTO.body);
+        Answer answer = new Answer(questionId, answerDTO.user, answerDTO.body);
 
         return answerRepository.save(answer).getAnswerId();
 

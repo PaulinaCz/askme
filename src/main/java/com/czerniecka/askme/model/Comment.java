@@ -3,10 +3,7 @@ package com.czerniecka.askme.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,14 +14,14 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
-    private Long answerId;
-    private Long commentingUserId;
+
+    @ManyToOne
+    private User user;
     private String body;
     private LocalDateTime dateCommentCreated;
 
-    public Comment(Long answerId, Long commentingUserId, String body) {
-        this.answerId = answerId;
-        this.commentingUserId = commentingUserId;
+    public Comment(User user, String body) {
+        this.user = user;
         this.body = body;
         this.dateCommentCreated = LocalDateTime.now();
     }
