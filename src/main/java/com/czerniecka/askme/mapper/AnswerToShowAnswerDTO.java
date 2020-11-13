@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class AnswerToShowAnswerDTO {
 
-    Optional<ShowAnswerDTO> getAnswerDto(Optional<Answer> answerOptional){
+    public Optional<ShowAnswerDTO> getAnswerDto(Optional<Answer> answerOptional){
 
         if(answerOptional.isEmpty()){
             return Optional.empty();

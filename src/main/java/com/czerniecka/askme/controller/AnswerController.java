@@ -1,0 +1,54 @@
+package com.czerniecka.askme.controller;
+
+import com.czerniecka.askme.dto.AnswerDTO;
+import com.czerniecka.askme.dto.ShowAnswerDTO;
+import com.czerniecka.askme.service.AnswerService;
+import com.czerniecka.askme.service.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/answers")
+public class AnswerController {
+
+    public AnswerService answerService;
+
+    @Autowired
+    public AnswerController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
+
+    @GetMapping("/answer/{answerId}")
+    public ResponseEntity<ShowAnswerDTO> getAnswerById(@PathVariable Long answerId){
+
+        Optional<ShowAnswerDTO> answer = answerService.getById(answerId);
+
+        return answer.map(showAnswerDTO -> new ResponseEntity<>(showAnswerDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
+    @GetMapping("/{questionId}/answers")
+    public ResponseEntity<List<ShowAnswerDTO>> getAllAnswerByQuestionId(@PathVariable Long questionId){
+
+        List<ShowAnswerDTO> answers = answerService.getAllByQuestionId(questionId);
+
+        return new ResponseEntity<>(answers, HttpStatus.OK);
+
+    }
+
+    @PostMapping("/{questionId}/answer")
+    public ResponseEntity<Long> addAnswer(@RequestBody AnswerDTO answerDTO,
+                                          @PathVariable Long questionId){
+
+        Long answerId = answerService.addAnswer(answerDTO, questionId);
+
+        return new ResponseEntity<>(answerId, HttpStatus.CREATED);
+
+    }
+}
