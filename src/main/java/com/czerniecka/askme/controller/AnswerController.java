@@ -52,7 +52,7 @@ public class AnswerController {
 
     }
 
-    @PutMapping("{questionId}/answer/{answerId}/rating")
+    @PutMapping("{questionId}/answer/{answerId}/rate")
     public ResponseEntity<Void> rate(@PathVariable Long questionId,
                                      @PathVariable Long answerId,
                                      @RequestBody Rating rating){
