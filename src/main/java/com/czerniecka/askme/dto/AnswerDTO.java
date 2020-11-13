@@ -1,10 +1,9 @@
 package com.czerniecka.askme.dto;
 
-import com.czerniecka.askme.model.User;
 
 public class AnswerDTO {
 
-    public User user;
+    public Long userId;
     public Long questionId;
     public String body;
 

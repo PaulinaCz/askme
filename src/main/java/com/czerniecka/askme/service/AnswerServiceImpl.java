@@ -69,7 +69,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Override
     public Long addAnswer(AnswerDTO answerDTO, Long questionId) {
 
-        Answer answer = new Answer(questionId, answerDTO.user, answerDTO.body);
+        Answer answer = new Answer(questionId, answerDTO.userId, answerDTO.body);
 
         return answerRepository.save(answer).getAnswerId();
 

@@ -17,19 +17,18 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private Long questionId;
+    private Long userId;
 
-    @ManyToOne
-    private User user;
-
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "answerId")
     private List<Comment> comments;
     private String body;
     private LocalDateTime dateAnswerGiven;
     private Long rating;
 
-    public Answer(Long questionId, User user, String body) {
+    public Answer(Long questionId, Long userId, String body) {
         this.questionId = questionId;
-        this.user = user;
+        this.userId = userId;
         this.body = body;
         this.dateAnswerGiven = LocalDateTime.now();
         this.rating = 0L;

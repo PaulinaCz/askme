@@ -15,13 +15,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @ManyToOne
-    private User user;
+    private Long userId;
     private String body;
     private LocalDateTime dateCommentCreated;
 
-    public Comment(User user, String body) {
-        this.user = user;
+    public Comment(Long userId, String body) {
+        this.userId = userId;
         this.body = body;
         this.dateCommentCreated = LocalDateTime.now();
     }

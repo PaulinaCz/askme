@@ -17,16 +17,16 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
-    @ManyToOne
-    private User user;
+    private Long userId;
     private String body;
     private LocalDateTime timeQuestionAsked;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "questionId")
     private List<Answer> answers;
 
-    public Question(User user, String body){
-        this.user = user;
+    public Question(Long userId, String body){
+        this.userId = userId;
         this.body = body;
         this.timeQuestionAsked = LocalDateTime.now();
         this.answers = new ArrayList<>();
