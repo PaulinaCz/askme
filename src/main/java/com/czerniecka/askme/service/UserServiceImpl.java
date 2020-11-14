@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
 
+    //TODO add password encoder & jwtTokenProvider
+
     private final UserRepository userRepository;
     private final UserToShowUserDTO mapper;
 
