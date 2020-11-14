@@ -4,7 +4,6 @@ import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
-import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,8 @@ public class AnswerServiceImpl implements AnswerService{
         List<Answer> answers = answerRepository.findAll();
 
         return answers.stream().filter(answer -> answer.getQuestionId().equals(questionId))
-                .map(a -> mapper.getAnswerDto(Optional.of(a)).orElseThrow())
+                .map(a -> mapper.getAnswerDto(Optional.of(a))
+                        .orElseThrow())
                 .collect(Collectors.toList());
 
     }

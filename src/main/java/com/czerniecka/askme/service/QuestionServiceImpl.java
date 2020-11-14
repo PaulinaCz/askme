@@ -5,6 +5,7 @@ import com.czerniecka.askme.dto.ShowQuestionDTO;
 import com.czerniecka.askme.mapper.QuestionToShowQuestionDTO;
 import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.repository.QuestionRepository;
+import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Optional<ShowQuestionDTO> getById(Long questionId) {
+
         Optional<Question> questionOptional = questionRepository.findById(questionId);
 
         if(questionOptional.isEmpty()){
@@ -44,7 +46,8 @@ public class QuestionServiceImpl implements QuestionService{
         List<Question> questions = questionRepository.findAll();
 
         return questions.stream()
-                .map(question -> mapper.getQuestionDto(Optional.of(question)).orElseThrow())
+                .map(question -> mapper.getQuestionDto(Optional.of(question))
+                        .orElseThrow())
                 .collect(Collectors.toList());
 
     }
@@ -59,7 +62,8 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public void editQuestion(Long questionId, AskQuestionDTO questionDTO) {
 
-        Question questionToEdit = questionRepository.findById(questionId).orElseThrow();
+        Question questionToEdit = questionRepository.findById(questionId)
+                .orElseThrow(() -> new PropertyNotFoundException("Question of id " + questionId + " not found"));
 
         questionToEdit.setBody(questionDTO.body);
         questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
@@ -73,7 +77,8 @@ public class QuestionServiceImpl implements QuestionService{
 
         return questions.stream()
                 .filter(question -> question.getUserId().equals(userId))
-                .map(q ->mapper.getQuestionDto(Optional.of(q)).orElseThrow())
+                .map(q ->mapper.getQuestionDto(Optional.of(q))
+                        .orElseThrow())
                 .collect(Collectors.toList());
 
     }

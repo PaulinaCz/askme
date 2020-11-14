@@ -33,7 +33,13 @@ public class UserController {
     @GetMapping("/allUsers")
     public ResponseEntity<List<ShowUserDTO>> getAllUsers(){
 
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+        List<ShowUserDTO> allUsers = userService.getAllUsers();
+
+        if(allUsers.isEmpty()){
+            return new ResponseEntity("No users found", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
 
     }
 

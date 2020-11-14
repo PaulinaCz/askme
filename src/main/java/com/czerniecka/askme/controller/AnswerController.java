@@ -39,6 +39,10 @@ public class AnswerController {
 
         List<ShowAnswerDTO> answers = answerService.getAllByQuestionId(questionId);
 
+        if(answers.isEmpty()){
+            return new ResponseEntity("No answers for id " + questionId + " found", HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(answers, HttpStatus.OK);
 
     }

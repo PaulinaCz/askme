@@ -39,6 +39,10 @@ public class QuestionController {
 
         List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(userId);
 
+        if(questionsByUser.isEmpty()){
+            return new ResponseEntity("User " + userId + " not found", HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(questionsByUser, HttpStatus.OK);
 
     }
@@ -47,6 +51,9 @@ public class QuestionController {
     public ResponseEntity<List<ShowQuestionDTO>> getAllQuestions(){
 
         List<ShowQuestionDTO> questions = questionService.getAll();
+        if(questions.isEmpty()){
+            return new ResponseEntity("There are no questions yet", HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(questions, HttpStatus.OK);
 
     }
@@ -62,6 +69,7 @@ public class QuestionController {
     @PutMapping("/editQuestion/{questionId}")
     public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId, @Valid @RequestBody AskQuestionDTO questionDTO)
     {
+
         questionService.editQuestion(questionId, questionDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
