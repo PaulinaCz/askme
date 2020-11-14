@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ public class AnswerController {
     }
 
     @PostMapping("/{questionId}/answer")
-    public ResponseEntity<Long> addAnswer(@RequestBody AnswerDTO answerDTO,
+    public ResponseEntity<Long> addAnswer(@Valid @RequestBody AnswerDTO answerDTO,
                                           @PathVariable Long questionId){
 
         Long answerId = answerService.addAnswer(answerDTO, questionId);

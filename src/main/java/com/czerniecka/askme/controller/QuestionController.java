@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> sendQuestion(@RequestBody AskQuestionDTO questionDTO){
+    public ResponseEntity<Long> sendQuestion(@Valid @RequestBody AskQuestionDTO questionDTO){
 
         Long questionId = questionService.sendQuestion(questionDTO);
 
@@ -59,7 +60,7 @@ public class QuestionController {
     }
 
     @PutMapping("/editQuestion/{questionId}")
-    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId, @RequestBody AskQuestionDTO questionDTO)
+    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId, @Valid @RequestBody AskQuestionDTO questionDTO)
     {
         questionService.editQuestion(questionId, questionDTO);
 

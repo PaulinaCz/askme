@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +33,7 @@ public class CommentController {
     }
 
     @PostMapping("/{questionId}/answers/{answerId}/comment")
-   public ResponseEntity<Long> addComment(@RequestBody WriteCommentDTO writeCommentDTO,
+   public ResponseEntity<Long> addComment(@Valid @RequestBody WriteCommentDTO writeCommentDTO,
                                                      @PathVariable Long answerId,
                                                      @PathVariable Long questionId
                                                      ){
