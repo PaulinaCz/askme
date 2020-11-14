@@ -29,7 +29,11 @@ public class User {
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.username = username;
+        if(username.isEmpty()){
+            this.username = name + surname;
+        }else{
+            this.username = username;
+        }
         this.dateCreated = LocalDateTime.now();
     }
 }
