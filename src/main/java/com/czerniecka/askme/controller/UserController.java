@@ -9,8 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/user")
@@ -23,29 +22,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<ShowUserDTO> getUserById(@PathVariable Long userId){
-        Optional<ShowUserDTO> user = userService.getById(userId);
-        return user.map(showUserDTO -> new ResponseEntity<>(showUserDTO, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
 
-    @GetMapping("/allUsers")
-    public ResponseEntity<List<ShowUserDTO>> getAllUsers(){
-
-        List<ShowUserDTO> allUsers = userService.getAllUsers();
-
-        if(allUsers.isEmpty()){
-            return new ResponseEntity("No users found", HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(allUsers, HttpStatus.OK);
-
-    }
-
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<CreateUserDTO> createUser(@Valid @RequestBody CreateUserDTO userDTO){
         userService.createUser(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password){
+        return userService.login(username, password);
     }
 }

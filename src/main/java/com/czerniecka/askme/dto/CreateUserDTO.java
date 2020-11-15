@@ -15,6 +15,10 @@ public class CreateUserDTO {
     @Size(min = 3, message = "Surname must be longer than 3 characters")
     public String surname;
 
+    @NotBlank(message = "Please provide a surname")
+    @Size(min = 3, message = "Surname must be longer than 3 characters")
+    public String username;
+
     @NotBlank(message = "Email is required")
     @Email(message = "Email not valid")
     public String email;
@@ -25,5 +29,4 @@ public class CreateUserDTO {
             message = "Password must be between 8 and 15 characters, contain at least one digit," +
                     "at least one lower case, at least one upper case and one special character")
     public String password;
-    public String username;
 }

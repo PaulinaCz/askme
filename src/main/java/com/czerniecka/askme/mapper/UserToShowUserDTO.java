@@ -21,9 +21,9 @@ public class UserToShowUserDTO {
             userDTO.userId = user.getUserId();
             userDTO.name = user.getName();
             userDTO.surname = user.getName();
+            userDTO.username = user.getUsername();
             userDTO.email = user.getEmail();
             userDTO.password = user.getPassword();
-            userDTO.username = user.getUsername();
             userDTO.dateCreated = user.getDateCreated();
             return Optional.of(userDTO);
         }

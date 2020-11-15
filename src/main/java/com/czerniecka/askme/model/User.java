@@ -19,21 +19,17 @@ public class User {
     private Long userId;
     private String name;
     private String surname;
+    private String username;
     private String email;
     private String password;
-    private String username;
     private LocalDateTime dateCreated;
 
-    public User(String name, String surname, String email, String password, String username) {
+    public User(String name, String surname,String username, String email, String password) {
         this.name = name;
         this.surname = surname;
+        this.username = username;
         this.email = email;
         this.password = password;
-        if(username.isEmpty()){
-            this.username = name + surname;
-        }else{
-            this.username = username;
-        }
         this.dateCreated = LocalDateTime.now();
     }
 }
