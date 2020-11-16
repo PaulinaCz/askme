@@ -1,12 +1,13 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.CreateUserDTO;
-import com.czerniecka.askme.security.CustomUserDetailsService;
+import com.czerniecka.askme.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @RestController
@@ -23,7 +24,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<Void> register(@RequestBody CreateUserDTO userDTO){
+    public ResponseEntity<Void> register(@Valid @RequestBody CreateUserDTO userDTO){
         userService.register(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

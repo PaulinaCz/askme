@@ -1,13 +1,10 @@
-package com.czerniecka.askme.security;
+package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.CreateUserDTO;
-import com.czerniecka.askme.dto.LoginUserDTO;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.UserRepository;
-import com.czerniecka.askme.service.UserService;
+import com.czerniecka.askme.security.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,8 +15,6 @@ public class CustomUserDetailsService implements UserDetailsService, UserService
 
     private UserRepository userRepository;
     private PasswordService passwordService;
-//    private AuthenticationManager authenticationManager;
-//    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     public CustomUserDetailsService(UserRepository userRepository, PasswordService passwordService) {
