@@ -1,3 +1,4 @@
+/*
 package com.czerniecka.askme.service;
 
 
@@ -74,3 +75,4 @@ public class MyUserDetailsServiceImpl implements UserDetailsService, MyUserDetai
 
 
 }
+*/

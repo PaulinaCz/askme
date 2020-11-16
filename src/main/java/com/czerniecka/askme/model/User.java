@@ -1,21 +1,21 @@
 package com.czerniecka.askme.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -28,6 +28,10 @@ public class User implements UserDetails {
     private String password;
     private LocalDateTime dateCreated;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
     public User(String name, String surname,String username, String email, String password) {
         this.name = name;
         this.surname = surname;
@@ -37,9 +41,19 @@ public class User implements UserDetails {
         this.dateCreated = LocalDateTime.now();
     }
 
+    public User() {
+    }
+
+    public List<String> getRoles() {
+        return new ArrayList<>();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+
         return new ArrayList<>();
+
+       // return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
@@ -61,4 +75,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
