@@ -35,12 +35,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@Valid @RequestBody LoginUserDTO userDTO){
+    public ResponseEntity<String> login(@Valid @RequestBody LoginUserDTO userDTO){
             String username = userDTO.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, userDTO.getPassword() ));
         String token = jwtTokenProvider.createToken(username, this.userRepository.findByUsername(username).
                 orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found")).getRoles());
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(token);
     }
 }
