@@ -3,7 +3,7 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.CreateUserDTO;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.UserRepository;
-import com.czerniecka.askme.security.PasswordService;
+import com.czerniecka.askme.security.PasswordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService, UserService {
 
     private UserRepository userRepository;
-    private PasswordService passwordService;
+    private PasswordServiceImpl passwordService;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository, PasswordService passwordService) {
+    public CustomUserDetailsService(UserRepository userRepository, PasswordServiceImpl passwordService) {
         this.userRepository = userRepository;
         this.passwordService = passwordService;
     }
