@@ -17,16 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private JwtTokenProvider jwtTokenProvider;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider) {
+    public SecurityConfiguration(JwtTokenProvider jwtTokenProvider, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(12);
-    }
 
     @Bean
     @Override

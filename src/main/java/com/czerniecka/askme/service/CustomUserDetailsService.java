@@ -3,23 +3,23 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.CreateUserDTO;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.UserRepository;
-import com.czerniecka.askme.security.PasswordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService, UserService {
 
     private UserRepository userRepository;
-    private PasswordServiceImpl passwordService;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository, PasswordServiceImpl passwordService) {
+    public CustomUserDetailsService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.passwordService = passwordService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService, UserService
 
     @Override
     public void register(CreateUserDTO userDTO){
-        String hashedPassword = passwordService.hashPassword(userDTO.password);
+        String hashedPassword = passwordEncoder.encode(userDTO.password);
         User user = new User(userDTO.name, userDTO.surname, userDTO.username, userDTO.email, hashedPassword);
         userRepository.save(user);
     }
