@@ -15,7 +15,7 @@ public interface AnswerService {
 
     Long addAnswer(AnswerDTO answerDTO, Long questionId, User user);
 
-    List<ShowAnswerDTO> getAllByQuestionId(Long questionId);
+    List<Optional<ShowAnswerDTO>> getAllByQuestionId(Long questionId);
 
     boolean changeRating(Long answerId, Rating rating);
 }

@@ -40,14 +40,16 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public List<ShowAnswerDTO> getAllByQuestionId(Long questionId) {
+    public List<Optional<ShowAnswerDTO>> getAllByQuestionId(Long questionId) {
 
-        List<Answer> answers = answerRepository.findAll();
-
-        return answers.stream().filter(answer -> answer.getQuestionId().equals(questionId))
-                .map(a -> mapper.getAnswerDto(Optional.of(a))
-                        .orElseThrow())
+        List<Optional<ShowAnswerDTO>> answers = answerRepository.getAllByQuestionId(questionId)
+                .stream().map(a -> mapper.getAnswerDto(Optional.of(a)))
                 .collect(Collectors.toList());
+
+        if(answers.isEmpty()){
+            return List.of(Optional.empty());
+        }
+        return answers;
 
     }
 
