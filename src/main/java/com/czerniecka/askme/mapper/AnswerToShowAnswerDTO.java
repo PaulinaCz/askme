@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class AnswerToShowAnswerDTO {
 
-    public Optional<ShowAnswerDTO> getAnswerDto(Optional<Answer> answerOptional){
+    public Optional<ShowAnswerDTO> getOptionalAnswerDto(Optional<Answer> answerOptional){
 
         if(answerOptional.isEmpty()){
             return Optional.empty();
@@ -26,6 +26,20 @@ public class AnswerToShowAnswerDTO {
 
             return Optional.of(answerDTO);
         }
+
+    }
+
+    public ShowAnswerDTO getAnswerDto(Answer answer){
+        ShowAnswerDTO answerDTO = new ShowAnswerDTO();
+
+        answerDTO.answerId = answer.getAnswerId();
+        answerDTO.user = answer.getUser();
+        answerDTO.questionId = answer.getQuestionId();
+        answerDTO.body = answer.getBody();
+        answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
+        answerDTO.rating = answer.getRating();
+
+        return answerDTO;
 
     }
 

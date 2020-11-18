@@ -10,6 +10,7 @@ import com.czerniecka.askme.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,22 +35,20 @@ public class AnswerServiceImpl implements AnswerService{
         if(answerOptional.isEmpty()){
             return Optional.empty();
         }else{
-            return mapper.getAnswerDto(answerOptional);
+            return mapper.getOptionalAnswerDto(answerOptional);
         }
 
     }
 
     @Override
-    public List<Optional<ShowAnswerDTO>> getAllByQuestionId(Long questionId) {
+    public List<ShowAnswerDTO> getAllByQuestionId(Long questionId) {
 
-        List<Optional<ShowAnswerDTO>> answers = answerRepository.getAllByQuestionId(questionId)
-                .stream().map(a -> mapper.getAnswerDto(Optional.of(a)))
-                .collect(Collectors.toList());
+        List<Answer> answers = answerRepository.getAllByQuestionId(questionId);
 
         if(answers.isEmpty()){
-            return List.of(Optional.empty());
+            return Collections.emptyList();
         }
-        return answers;
+        return answers.stream().map(mapper::getAnswerDto).collect(Collectors.toList());
 
     }
 

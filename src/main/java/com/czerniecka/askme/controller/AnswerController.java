@@ -38,7 +38,7 @@ public class AnswerController {
     @GetMapping("/{questionId}/answers")
     public ResponseEntity<List<ShowAnswerDTO>> getAllAnswerByQuestionId(@PathVariable Long questionId){
 
-        List<Optional<ShowAnswerDTO>> answers = answerService.getAllByQuestionId(questionId);
+        List<ShowAnswerDTO> answers = answerService.getAllByQuestionId(questionId);
 
         if(answers.isEmpty()){
             return new ResponseEntity("No answers for id " + questionId + " found", HttpStatus.NOT_FOUND);
