@@ -34,12 +34,4 @@ public class CustomUserDetailsService implements UserDetailsService, UserService
         User user = new User(userDTO.name, userDTO.surname, userDTO.username, userDTO.email, hashedPassword);
         userRepository.save(user);
     }
-//
-//    @Override
-//    public String login(LoginUserDTO data){
-//            String username = data.getUsername();
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword() ));
-//        String token = jwtTokenProvider.createToken(username, this.userRepository.findByUsername(username).orElseThrow().getRoles());
-//        return token;
-//    }
 }
