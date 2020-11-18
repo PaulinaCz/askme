@@ -3,7 +3,6 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.model.Rating;
-import com.czerniecka.askme.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 

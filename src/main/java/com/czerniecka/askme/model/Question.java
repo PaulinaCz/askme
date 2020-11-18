@@ -34,4 +34,8 @@ public class Question {
         this.answers = new ArrayList<>();
     }
 
+    public void addAnswer(Answer answer){
+        this.answers.add(answer);
+    }
+
 }

@@ -3,8 +3,10 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.ShowCommentDTO;
 import com.czerniecka.askme.dto.WriteCommentDTO;
 import com.czerniecka.askme.mapper.CommentToShowCommentDTO;
+import com.czerniecka.askme.model.Answer;
 import com.czerniecka.askme.model.Comment;
 import com.czerniecka.askme.model.User;
+import com.czerniecka.askme.repository.AnswerRepository;
 import com.czerniecka.askme.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +21,13 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
+    private final AnswerRepository answerRepository;
     private final CommentToShowCommentDTO mapper;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, CommentToShowCommentDTO mapper) {
+    public CommentServiceImpl(CommentRepository commentRepository, AnswerRepository answerRepository, CommentToShowCommentDTO mapper) {
         this.commentRepository = commentRepository;
+        this.answerRepository = answerRepository;
         this.mapper = mapper;
     }
 
@@ -45,8 +49,13 @@ public class CommentServiceImpl implements CommentService{
 
         User user = (User) userDetails;
         Comment comment = new Comment(user, writeCommentDTO.body);
+        Optional<Answer> answer = answerRepository.findById(answerId);
+        if(answer.isPresent()){
+            answer.get().addComment(comment);
+            return commentRepository.save(comment).getCommentId();
+        }
 
-        return commentRepository.save(comment).getCommentId();
+        return -1L;
     }
 
     @Override

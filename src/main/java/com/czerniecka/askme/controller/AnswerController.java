@@ -3,7 +3,6 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.model.Rating;
-import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +55,10 @@ public class AnswerController {
                                           @AuthenticationPrincipal UserDetails userDetails){
 
         Long answerId = answerService.addAnswer(answerDTO, questionId, userDetails);
+
+        if(answerId == -1){
+            return new ResponseEntity("Question of id " + questionId + " not found.", HttpStatus.NOT_FOUND);
+        }
 
         return new ResponseEntity<>(answerId, HttpStatus.CREATED);
 

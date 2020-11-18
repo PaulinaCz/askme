@@ -4,9 +4,11 @@ import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
+import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.AnswerRepository;
+import com.czerniecka.askme.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,13 @@ import java.util.stream.Collectors;
 public class AnswerServiceImpl implements AnswerService{
 
     private final AnswerRepository answerRepository;
+    private final QuestionRepository questionRepository;
     private final AnswerToShowAnswerDTO mapper;
 
     @Autowired
-    public AnswerServiceImpl(AnswerRepository answerRepository, AnswerToShowAnswerDTO mapper) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository, AnswerToShowAnswerDTO mapper) {
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
         this.mapper = mapper;
     }
 
@@ -73,11 +77,14 @@ public class AnswerServiceImpl implements AnswerService{
     public Long addAnswer(AnswerDTO answerDTO, Long questionId, UserDetails userDetails) {
 
         User user = (User) userDetails;
-
         Answer answer = new Answer(user, answerDTO.body);
+        Optional<Question> question = questionRepository.findById(questionId);
+        if(question.isPresent()){
+            question.get().addAnswer(answer);
+            return answerRepository.save(answer).getAnswerId();
+        }
 
-        return answerRepository.save(answer).getAnswerId();
-
+        return -1L;
     }
 
 

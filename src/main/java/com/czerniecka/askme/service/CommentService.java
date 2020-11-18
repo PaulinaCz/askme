@@ -2,7 +2,6 @@ package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.ShowCommentDTO;
 import com.czerniecka.askme.dto.WriteCommentDTO;
-import com.czerniecka.askme.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 

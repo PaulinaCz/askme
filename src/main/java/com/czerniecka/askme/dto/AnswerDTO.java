@@ -10,4 +10,5 @@ public class AnswerDTO {
     @Size(max = 5000, message = "Answer should be up to 5000 characters!")
     public String body;
 
+
 }

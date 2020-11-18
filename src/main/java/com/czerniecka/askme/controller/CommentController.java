@@ -56,8 +56,11 @@ public class CommentController {
                                                      @AuthenticationPrincipal UserDetails userDetails
                                                      ){
 
-        Long commentId = commentService.addComment(writeCommentDTO, questionId, userDetails);
+        Long commentId = commentService.addComment(writeCommentDTO, answerId, userDetails);
 
+        if(commentId == -1){
+            return new ResponseEntity("Answer of id " + answerId + " not found.", HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(commentId, HttpStatus.CREATED);
 
    }

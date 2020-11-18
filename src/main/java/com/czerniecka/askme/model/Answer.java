@@ -40,4 +40,8 @@ public class Answer {
         this.comments = new ArrayList<>();
     }
 
+    public void addComment(Comment comment){
+        this.comments.add(comment);
+    }
+
 }
