@@ -16,7 +16,9 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
-    private Long questionId;
+
+    @ManyToOne
+    private Question question;
 
     @ManyToOne
     private User user;
@@ -28,8 +30,7 @@ public class Answer {
     private LocalDateTime dateAnswerGiven;
     private Long rating;
 
-    public Answer(Long questionId, User user, String body) {
-        this.questionId = questionId;
+    public Answer(User user, String body) {
         this.user = user;
         this.body = body;
         this.dateAnswerGiven = LocalDateTime.now();

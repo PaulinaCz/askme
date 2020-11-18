@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    @Query(value = "SELECT a From Answer a where a.questionId = ?1 ORDER BY a.dateAnswerGiven DESC ")
+    @Query(value = "SELECT a From Answer a where a.question.questionId = ?1 ORDER BY a.dateAnswerGiven DESC ")
     List<Answer> getAllByQuestionId(Long questionId);
 }

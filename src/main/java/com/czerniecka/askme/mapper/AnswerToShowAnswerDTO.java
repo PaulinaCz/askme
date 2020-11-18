@@ -19,7 +19,7 @@ public class AnswerToShowAnswerDTO {
 
             answerDTO.answerId = answer.getAnswerId();
             answerDTO.user = answer.getUser();
-            answerDTO.questionId = answer.getQuestionId();
+            answerDTO.question = answer.getQuestion();
             answerDTO.body = answer.getBody();
             answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
             answerDTO.rating = answer.getRating();
@@ -34,7 +34,7 @@ public class AnswerToShowAnswerDTO {
 
         answerDTO.answerId = answer.getAnswerId();
         answerDTO.user = answer.getUser();
-        answerDTO.questionId = answer.getQuestionId();
+        answerDTO.question = answer.getQuestion();
         answerDTO.body = answer.getBody();
         answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
         answerDTO.rating = answer.getRating();
