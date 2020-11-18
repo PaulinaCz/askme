@@ -8,6 +8,7 @@ import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -69,7 +70,9 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public Long addAnswer(AnswerDTO answerDTO, Long questionId, User user) {
+    public Long addAnswer(AnswerDTO answerDTO, Long questionId, UserDetails userDetails) {
+
+        User user = (User) userDetails;
 
         Answer answer = new Answer(user, answerDTO.body);
 

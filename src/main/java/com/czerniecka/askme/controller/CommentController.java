@@ -7,6 +7,7 @@ import com.czerniecka.askme.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,10 +52,10 @@ public class CommentController {
    public ResponseEntity<Long> addComment(@Valid @RequestBody WriteCommentDTO writeCommentDTO,
                                                      @PathVariable Long answerId,
                                                      @PathVariable Long questionId,
-                                                        User user
+                                                      UserDetails userDetails
                                                      ){
 
-        Long commentId = commentService.addComment(writeCommentDTO, questionId, user);
+        Long commentId = commentService.addComment(writeCommentDTO, questionId, userDetails);
 
         return new ResponseEntity<>(commentId, HttpStatus.CREATED);
 

@@ -8,6 +8,7 @@ import com.czerniecka.askme.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,9 +52,9 @@ public class AnswerController {
     @PostMapping("/{questionId}/answer")
     public ResponseEntity<Long> addAnswer(@Valid @RequestBody AnswerDTO answerDTO,
                                           @PathVariable Long questionId,
-                                          User user){
+                                          UserDetails userDetails){
 
-        Long answerId = answerService.addAnswer(answerDTO, questionId, user);
+        Long answerId = answerService.addAnswer(answerDTO, questionId, userDetails);
 
         return new ResponseEntity<>(answerId, HttpStatus.CREATED);
 
