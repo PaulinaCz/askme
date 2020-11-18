@@ -17,14 +17,16 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
     private Question question;
 
     @ManyToOne
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "answerId")
+    @OneToMany(mappedBy = "answer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Comment> comments;
     private String body;
     private LocalDateTime dateAnswerGiven;

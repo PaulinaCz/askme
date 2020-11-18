@@ -8,6 +8,7 @@ import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.QuestionRepository;
 import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -54,7 +55,8 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Long sendQuestion(AskQuestionDTO questionDTO, User user) {
+    public Long sendQuestion(AskQuestionDTO questionDTO, UserDetails userDetails) {
+        User user = (User) userDetails;
         Question questionToSend = new Question(user, questionDTO.body);
 
         return questionRepository.save(questionToSend).getQuestionId();

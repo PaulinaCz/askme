@@ -22,8 +22,9 @@ public class Question {
     private String body;
     private LocalDateTime timeQuestionAsked;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "questionId")
+    @OneToMany(mappedBy = "question",
+                cascade = CascadeType.ALL,
+                orphanRemoval = true)
     private List<Answer> answers;
 
     public Question(User user, String body){

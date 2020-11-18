@@ -8,6 +8,8 @@ import com.czerniecka.askme.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,9 +63,9 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity<Long> sendQuestion(@Valid @RequestBody AskQuestionDTO questionDTO,
-                                             User user){
+                                             @AuthenticationPrincipal UserDetails userDetails){
 
-        Long questionId = questionService.sendQuestion(questionDTO, user);
+        Long questionId = questionService.sendQuestion(questionDTO, userDetails);
 
         return new ResponseEntity<>(questionId, HttpStatus.CREATED);
     }
