@@ -7,8 +7,6 @@ import javax.validation.constraints.Size;
 
 public class AnswerDTO {
 
-    @NotNull(message = "Could not answer. Try again")
-    public Long userId;
     @NotNull(message = "Choose question you want to answer")
     public Long questionId;
     @NotBlank(message = "Please add content to your answer")

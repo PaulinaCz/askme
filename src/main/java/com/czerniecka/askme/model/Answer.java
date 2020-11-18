@@ -17,7 +17,9 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private Long questionId;
-    private Long userId;
+
+    @ManyToOne
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "answerId")
@@ -26,9 +28,9 @@ public class Answer {
     private LocalDateTime dateAnswerGiven;
     private Long rating;
 
-    public Answer(Long questionId, Long userId, String body) {
+    public Answer(Long questionId, User user, String body) {
         this.questionId = questionId;
-        this.userId = userId;
+        this.user = user;
         this.body = body;
         this.dateAnswerGiven = LocalDateTime.now();
         this.rating = 0L;
