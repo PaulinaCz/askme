@@ -3,6 +3,7 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.model.Rating;
+import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,9 +50,10 @@ public class AnswerController {
 
     @PostMapping("/{questionId}/answer")
     public ResponseEntity<Long> addAnswer(@Valid @RequestBody AnswerDTO answerDTO,
-                                          @PathVariable Long questionId){
+                                          @PathVariable Long questionId,
+                                          User user){
 
-        Long answerId = answerService.addAnswer(answerDTO, questionId);
+        Long answerId = answerService.addAnswer(answerDTO, questionId, user);
 
         return new ResponseEntity<>(answerId, HttpStatus.CREATED);
 
