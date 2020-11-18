@@ -19,7 +19,7 @@ public class CommentToShowCommentDTO {
             ShowCommentDTO commentDTO = new ShowCommentDTO();
 
             commentDTO.commentId = comment.getCommentId();
-            commentDTO.userId = comment.getUserId();
+            commentDTO.user = comment.getUser();
             commentDTO.body = comment.getBody();
             commentDTO.dateCommentCreated = comment.getDateCommentCreated();
 

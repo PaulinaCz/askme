@@ -4,6 +4,7 @@ import com.czerniecka.askme.dto.ShowCommentDTO;
 import com.czerniecka.askme.dto.WriteCommentDTO;
 import com.czerniecka.askme.mapper.CommentToShowCommentDTO;
 import com.czerniecka.askme.model.Comment;
+import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,8 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Long addComment(WriteCommentDTO writeCommentDTO, Long questionId, Long answerId) {
-        Comment comment = new Comment(writeCommentDTO.userId, writeCommentDTO.body);
+    public Long addComment(WriteCommentDTO writeCommentDTO, Long answerId, User user) {
+        Comment comment = new Comment(user, writeCommentDTO.body);
 
         return commentRepository.save(comment).getCommentId();
     }
