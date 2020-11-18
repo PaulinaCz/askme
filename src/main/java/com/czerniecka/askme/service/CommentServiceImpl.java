@@ -9,7 +9,10 @@ import com.czerniecka.askme.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService{
@@ -31,7 +34,7 @@ public class CommentServiceImpl implements CommentService{
         if(commentOptional.isEmpty()){
             return Optional.empty();
         }else{
-            return mapper.getCommentDto(commentOptional);
+            return mapper.getOptionalCommentDto(commentOptional);
         }
 
     }
@@ -41,5 +44,16 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = new Comment(user, writeCommentDTO.body);
 
         return commentRepository.save(comment).getCommentId();
+    }
+
+    @Override
+    public List<ShowCommentDTO> getAllByAnswerId(Long answerId) {
+
+        List<Comment> comments = commentRepository.getAllByAnswerId(answerId);
+
+        if(comments.isEmpty()){
+            return Collections.emptyList();
+        }
+        return comments.stream().map(mapper::getCommentDto).collect(Collectors.toList());
     }
 }

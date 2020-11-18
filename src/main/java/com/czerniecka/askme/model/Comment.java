@@ -16,6 +16,9 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne
+    private Answer answer;
+
+    @ManyToOne
     private User user;
     private String body;
     private LocalDateTime dateCommentCreated;

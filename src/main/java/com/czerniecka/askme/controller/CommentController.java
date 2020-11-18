@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +31,19 @@ public class CommentController {
 
         return comment.map(showCommentDTO -> new ResponseEntity<>(showCommentDTO, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
+    @GetMapping("/{answerId}/comments")
+    public ResponseEntity<List<ShowCommentDTO>> getAllCommentByAnswerId(@PathVariable Long answerId){
+
+        List<ShowCommentDTO> comments = commentService.getAllByAnswerId(answerId);
+
+        if(comments.isEmpty()){
+            return new ResponseEntity("No comments for answer " + answerId + " found.", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(comments, HttpStatus.OK);
 
     }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class CommentToShowCommentDTO {
 
-    public Optional<ShowCommentDTO> getCommentDto(Optional<Comment> optionalComment){
+    public Optional<ShowCommentDTO> getOptionalCommentDto(Optional<Comment> optionalComment){
 
         if(optionalComment.isEmpty()){
             return Optional.empty();
@@ -26,6 +26,17 @@ public class CommentToShowCommentDTO {
             return Optional.of(commentDTO);
         }
 
+    }
+
+    public ShowCommentDTO getCommentDto(Comment comment){
+        ShowCommentDTO commentDTO = new ShowCommentDTO();
+
+        commentDTO.commentId = comment.getCommentId();
+        commentDTO.user = comment.getUser();
+        commentDTO.body = comment.getBody();
+        commentDTO.dateCommentCreated = comment.getDateCommentCreated();
+
+        return commentDTO;
     }
 
 }
