@@ -17,7 +17,8 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
-    private Long userId;
+    @ManyToOne
+    private User user;
     private String body;
     private LocalDateTime timeQuestionAsked;
 
@@ -25,8 +26,8 @@ public class Question {
     @JoinColumn(name = "questionId")
     private List<Answer> answers;
 
-    public Question(Long userId, String body){
-        this.userId = userId;
+    public Question(User user, String body){
+        this.user = user;
         this.body = body;
         this.timeQuestionAsked = LocalDateTime.now();
         this.answers = new ArrayList<>();

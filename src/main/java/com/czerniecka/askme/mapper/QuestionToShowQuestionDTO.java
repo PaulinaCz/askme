@@ -20,7 +20,7 @@ public class QuestionToShowQuestionDTO {
             ShowQuestionDTO questionDTO = new ShowQuestionDTO();
 
             questionDTO.questionId = question.getQuestionId();
-            questionDTO.userId = question.getUserId();
+            questionDTO.user = question.getUser();
             questionDTO.body = question.getBody();
             questionDTO.timeQuestionAsked = question.getTimeQuestionAsked();
 

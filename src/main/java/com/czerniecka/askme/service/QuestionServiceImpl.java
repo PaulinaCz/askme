@@ -4,6 +4,7 @@ import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
 import com.czerniecka.askme.mapper.QuestionToShowQuestionDTO;
 import com.czerniecka.askme.model.Question;
+import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.QuestionRepository;
 import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +54,8 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public Long sendQuestion(AskQuestionDTO questionDTO) {
-        Question questionToSend = new Question(questionDTO.userId, questionDTO.body);
+    public Long sendQuestion(AskQuestionDTO questionDTO, User user) {
+        Question questionToSend = new Question(user, questionDTO.body);
 
         return questionRepository.save(questionToSend).getQuestionId();
     }
@@ -76,7 +77,7 @@ public class QuestionServiceImpl implements QuestionService{
         List<Question> questions = questionRepository.findAll();
 
         return questions.stream()
-                .filter(question -> question.getUserId().equals(userId))
+                .filter(question -> question.getUser().getUserId().equals(userId))
                 .map(q ->mapper.getQuestionDto(Optional.of(q))
                         .orElseThrow())
                 .collect(Collectors.toList());

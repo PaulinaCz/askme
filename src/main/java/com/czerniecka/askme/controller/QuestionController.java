@@ -3,6 +3,7 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
+import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,9 +60,10 @@ public class QuestionController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> sendQuestion(@Valid @RequestBody AskQuestionDTO questionDTO){
+    public ResponseEntity<Long> sendQuestion(@Valid @RequestBody AskQuestionDTO questionDTO,
+                                             User user){
 
-        Long questionId = questionService.sendQuestion(questionDTO);
+        Long questionId = questionService.sendQuestion(questionDTO, user);
 
         return new ResponseEntity<>(questionId, HttpStatus.CREATED);
     }
