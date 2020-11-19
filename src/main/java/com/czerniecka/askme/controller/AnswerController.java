@@ -85,9 +85,11 @@ public class AnswerController {
                                                        @AuthenticationPrincipal UserDetails userDetails)
     {
 
-        answerService.editAnswer(answerId, answerDTO, userDetails);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if(answerService.editAnswer(answerId, answerDTO, userDetails)){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity("Can only edit answer you given", HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
