@@ -1,6 +1,7 @@
 package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.AnswerDTO;
+import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
@@ -58,14 +59,22 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public boolean changeRating(Long answerId, Rating rating) {
+    public boolean changeRating(Long answerId, RatingDTO rating) {
 
         Optional<Answer> answerOptional = answerRepository.findById(answerId);
+
+        Rating r = null;
+        if(rating.rate == 1){
+            r = Rating.USEFUL;
+        }else if(rating.rate == -1){
+            r = Rating.NOTUSEFUL;
+        }
 
         if(answerOptional.isPresent()){
             Answer answer = answerOptional.get();
             Long currentRate = answer.getRating();
-            answer.setRating(currentRate + rating.getRate());
+            answer.setRating(currentRate + r.getRate());
+            answerRepository.save(answer);
             return true;
         }
         else{

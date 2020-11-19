@@ -1,6 +1,7 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AnswerDTO;
+import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.service.AnswerService;
@@ -64,10 +65,10 @@ public class AnswerController {
 
     }
 
-    @PutMapping("{questionId}/answer/{answerId}/rate")
+    @PutMapping("/{questionId}/answer/{answerId}/rate")
     public ResponseEntity<Void> rate(@PathVariable Long questionId,
                                      @PathVariable Long answerId,
-                                     @RequestBody Rating rating){
+                                     @RequestBody RatingDTO rating){
 
         boolean changed = answerService.changeRating(answerId, rating);
 

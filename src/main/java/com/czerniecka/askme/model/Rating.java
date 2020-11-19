@@ -1,5 +1,7 @@
 package com.czerniecka.askme.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import lombok.Getter;
 
 @Getter
@@ -14,9 +16,15 @@ public enum Rating {
     USEFUL(1),
     NOTUSEFUL(-1);
 
-    private final int rate;
+    private int rate;
 
     Rating(int rate) {
         this.rate = rate;
+    }
+
+
+    @JsonValue
+    public int getRate(){
+        return rate;
     }
 }
