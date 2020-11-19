@@ -76,8 +76,10 @@ public class QuestionController {
                                                         @AuthenticationPrincipal UserDetails userDetails)
     {
 
-        questionService.editQuestion(questionId, questionDTO, userDetails);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if(questionService.editQuestion(questionId, questionDTO, userDetails)){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity("Can only edit question you asked", HttpStatus.BAD_REQUEST);
+        }
     }
 }

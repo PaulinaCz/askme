@@ -17,7 +17,7 @@ public interface QuestionService {
 
     Long sendQuestion(AskQuestionDTO questionDTO, UserDetails userDetails);
 
-    void editQuestion(Long questionId, AskQuestionDTO questionDTO, UserDetails userDetails);
+    boolean editQuestion(Long questionId, AskQuestionDTO questionDTO, UserDetails userDetails);
 
     List<ShowQuestionDTO> getAllByUser(Long userId);
 }
