@@ -3,6 +3,7 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
+import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,10 +71,12 @@ public class QuestionController {
     }
 
     @PutMapping("/editQuestion/{questionId}")
-    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId, @Valid @RequestBody AskQuestionDTO questionDTO)
+    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId,
+                                                       @Valid @RequestBody AskQuestionDTO questionDTO,
+                                                        @AuthenticationPrincipal UserDetails userDetails)
     {
 
-        questionService.editQuestion(questionId, questionDTO);
+        questionService.editQuestion(questionId, questionDTO, userDetails);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

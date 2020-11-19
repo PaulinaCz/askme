@@ -63,13 +63,21 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public void editQuestion(Long questionId, AskQuestionDTO questionDTO) {
+    public void editQuestion(Long questionId, AskQuestionDTO questionDTO, UserDetails userDetails) {
 
         Question questionToEdit = questionRepository.findById(questionId)
                 .orElseThrow(() -> new PropertyNotFoundException("Question of id " + questionId + " not found"));
 
-        questionToEdit.setBody(questionDTO.body);
-        questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
+        User user = (User) userDetails;
+        Optional<ShowQuestionDTO> question = getAllByUser(user.getUserId())
+                .stream()
+                .filter(q -> q.questionId.equals(questionId))
+                .findAny();
+
+        if(question.isPresent()){
+            questionToEdit.setBody(questionDTO.body);
+            questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
+        }else throw new PropertyNotFoundException("Only allowed to edit your own questions");
 
     }
 
