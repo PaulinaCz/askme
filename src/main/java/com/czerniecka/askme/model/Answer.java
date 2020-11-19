@@ -1,5 +1,6 @@
 package com.czerniecka.askme.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,10 +15,11 @@ import java.util.List;
 public class Answer {
 
     @Id
+    @Column(name = "answer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "question_id")
     private Question question;
 
@@ -27,6 +29,7 @@ public class Answer {
     @OneToMany(mappedBy = "answer",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments;
     private String body;
     private LocalDateTime dateAnswerGiven;
@@ -41,7 +44,9 @@ public class Answer {
     }
 
     public void addComment(Comment comment){
+
         this.comments.add(comment);
+        comment.setAnswer(this);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.czerniecka.askme.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class Question {
 
     @Id
+    @Column(name = "question_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
@@ -25,6 +27,7 @@ public class Question {
     @OneToMany(mappedBy = "question",
                 cascade = CascadeType.ALL,
                 orphanRemoval = true)
+    @JsonIgnore
     private List<Answer> answers;
 
     public Question(User user, String body){
@@ -36,6 +39,7 @@ public class Question {
 
     public void addAnswer(Answer answer){
         this.answers.add(answer);
+        answer.setQuestion(this);
     }
 
 }

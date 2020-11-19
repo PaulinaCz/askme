@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
+    @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "answer_id")
     private Answer answer;
 
