@@ -1,7 +1,6 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AnswerDTO;
-import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.service.AnswerService;

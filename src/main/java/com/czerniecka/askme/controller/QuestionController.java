@@ -3,7 +3,6 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
-import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -7,13 +7,11 @@ import com.czerniecka.askme.mapper.QuestionToShowQuestionDTO;
 import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.QuestionRepository;
-import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.MethodNotAllowedException;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,7 +68,7 @@ public class QuestionServiceImpl implements QuestionService{
     public boolean editQuestion(Long questionId, AskQuestionDTO questionDTO, UserDetails userDetails) {
 
         Question questionToEdit = questionRepository.findById(questionId)
-                .orElseThrow(() -> new PropertyNotFoundException("Question of id " + questionId + " not found"));
+                .orElseThrow(() -> new CustomException("Question of id " + questionId + " not found", HttpStatus.NOT_FOUND));
 
 
         User user = (User) userDetails;

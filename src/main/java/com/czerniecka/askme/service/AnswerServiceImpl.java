@@ -3,7 +3,6 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
-import com.czerniecka.askme.dto.ShowQuestionDTO;
 import com.czerniecka.askme.exception.CustomException;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
@@ -12,7 +11,6 @@ import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.AnswerRepository;
 import com.czerniecka.askme.repository.QuestionRepository;
-import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -106,7 +104,7 @@ public class AnswerServiceImpl implements AnswerService{
     public boolean editAnswer(Long answerId, AnswerDTO answerDTO, UserDetails userDetails) {
 
         Answer answerToEdit = answerRepository.findById(answerId)
-                .orElseThrow(() -> new PropertyNotFoundException("Answer of id " + answerId + " not found"));
+                .orElseThrow(() -> new CustomException("Answer of id " + answerId + " not found", HttpStatus.NOT_FOUND));
 
         User user = (User) userDetails;
 
