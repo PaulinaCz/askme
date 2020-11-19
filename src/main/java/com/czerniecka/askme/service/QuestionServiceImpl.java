@@ -2,14 +2,18 @@ package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
+import com.czerniecka.askme.exception.CustomException;
 import com.czerniecka.askme.mapper.QuestionToShowQuestionDTO;
 import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.QuestionRepository;
 import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.MethodNotAllowedException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -90,6 +94,23 @@ public class QuestionServiceImpl implements QuestionService{
                 .map(q ->mapper.getQuestionDto(Optional.of(q))
                         .orElseThrow())
                 .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public void deleteQuestion(Long questionId, UserDetails userDetails) {
+        Optional<Question> questionOptional = questionRepository.findById(questionId);
+        User user = (User) userDetails;
+
+        if (questionOptional.isPresent()){
+            Question question = questionOptional.get();
+            if(question.getUser().getUserId().equals(user.getUserId())){
+                questionRepository.delete(question);
+            }
+            throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
+        throw new CustomException("Question " + questionId + " not found", HttpStatus.NOT_FOUND);
 
     }
 }

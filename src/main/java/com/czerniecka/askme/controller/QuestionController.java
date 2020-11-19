@@ -82,4 +82,13 @@ public class QuestionController {
             return new ResponseEntity("Can only edit question you asked", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/deleteQuestion/{questionId}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId,
+                                            @AuthenticationPrincipal UserDetails userDetails){
+
+        questionService.deleteQuestion(questionId, userDetails);
+        return ResponseEntity.ok("Question " + questionId + " deleted");
+
+    }
 }

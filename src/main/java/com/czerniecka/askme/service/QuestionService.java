@@ -2,7 +2,6 @@ package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
-import com.czerniecka.askme.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +19,6 @@ public interface QuestionService {
     boolean editQuestion(Long questionId, AskQuestionDTO questionDTO, UserDetails userDetails);
 
     List<ShowQuestionDTO> getAllByUser(Long userId);
+
+    void deleteQuestion(Long questionId, UserDetails userDetails);
 }
