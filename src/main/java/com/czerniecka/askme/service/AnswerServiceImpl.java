@@ -4,6 +4,7 @@ import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
+import com.czerniecka.askme.exception.CustomException;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
 import com.czerniecka.askme.model.Question;
@@ -13,6 +14,7 @@ import com.czerniecka.askme.repository.AnswerRepository;
 import com.czerniecka.askme.repository.QuestionRepository;
 import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -125,6 +127,22 @@ public class AnswerServiceImpl implements AnswerService{
                 .filter(answer -> answer.getUser().getUserId().equals(userId))
                 .map(mapper::getAnswerDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAnswer(Long answerId, UserDetails userDetails) {
+        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+        User user = (User) userDetails;
+
+        if (answerOptional.isPresent()){
+            Answer answer = answerOptional.get();
+            if(answer.getUser().getUserId().equals(user.getUserId())){
+                answerRepository.delete(answer);
+            }
+            throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
+        throw new CustomException("Question " + answerId + " not found", HttpStatus.NOT_FOUND);
     }
 
 }

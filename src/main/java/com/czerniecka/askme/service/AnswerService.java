@@ -22,4 +22,6 @@ public interface AnswerService {
     boolean editAnswer(Long answerId, AnswerDTO answerDTO, UserDetails userDetails);
 
     List<ShowAnswerDTO> getAllByUser(Long userId);
+
+    void deleteAnswer(Long answerId, UserDetails userDetails);
 }

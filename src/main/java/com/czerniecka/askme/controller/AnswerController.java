@@ -92,4 +92,13 @@ public class AnswerController {
         }
     }
 
+    @DeleteMapping("/deleteAnswer/{answerId}")
+    public ResponseEntity<?> deleteAnswer(@PathVariable Long answerId,
+                                            @AuthenticationPrincipal UserDetails userDetails){
+
+        answerService.deleteAnswer(answerId, userDetails);
+        return ResponseEntity.ok("Question " + answerId + " deleted");
+
+    }
+
 }
