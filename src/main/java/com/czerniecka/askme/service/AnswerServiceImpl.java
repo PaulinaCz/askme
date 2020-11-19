@@ -107,12 +107,8 @@ public class AnswerServiceImpl implements AnswerService{
                 .orElseThrow(() -> new PropertyNotFoundException("Answer of id " + answerId + " not found"));
 
         User user = (User) userDetails;
-        Optional<ShowAnswerDTO> answer = getAllByUser(user.getUserId())
-                .stream()
-                .filter(a -> a.answerId.equals(answerId))
-                .findAny();
 
-        if(answer.isPresent()){
+        if(answerToEdit.getUser().getUserId().equals(user.getUserId())){
             answerToEdit.setBody(answerDTO.body);
             answerToEdit.setDateAnswerGiven(LocalDateTime.now());
             return true;

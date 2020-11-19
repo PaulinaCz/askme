@@ -68,13 +68,10 @@ public class QuestionServiceImpl implements QuestionService{
         Question questionToEdit = questionRepository.findById(questionId)
                 .orElseThrow(() -> new PropertyNotFoundException("Question of id " + questionId + " not found"));
 
-        User user = (User) userDetails;
-        Optional<ShowQuestionDTO> question = getAllByUser(user.getUserId())
-                .stream()
-                .filter(q -> q.questionId.equals(questionId))
-                .findAny();
 
-        if(question.isPresent()){
+        User user = (User) userDetails;
+
+        if(questionToEdit.getUser().getUserId().equals(user.getUserId())){
             questionToEdit.setBody(questionDTO.body);
             questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
             return true;
