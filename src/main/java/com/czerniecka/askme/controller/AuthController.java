@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+// TODO: check if multiple controllers with POST method can have same url
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

@@ -2,7 +2,6 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.ShowCommentDTO;
 import com.czerniecka.askme.dto.WriteCommentDTO;
-import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
