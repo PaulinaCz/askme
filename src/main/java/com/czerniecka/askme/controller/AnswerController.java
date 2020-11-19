@@ -3,7 +3,6 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
-import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
