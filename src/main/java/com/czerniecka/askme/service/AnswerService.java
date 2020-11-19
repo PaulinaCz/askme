@@ -3,7 +3,6 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
-import com.czerniecka.askme.model.Rating;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +18,8 @@ public interface AnswerService {
     List<ShowAnswerDTO> getAllByQuestionId(Long questionId);
 
     boolean changeRating(Long answerId, RatingDTO rating);
+
+    boolean editAnswer(Long answerId, AnswerDTO answerDTO, UserDetails userDetails);
+
+    List<ShowAnswerDTO> getAllByUser(Long userId);
 }

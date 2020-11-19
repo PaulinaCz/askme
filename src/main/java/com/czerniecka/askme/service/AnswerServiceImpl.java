@@ -3,6 +3,7 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
+import com.czerniecka.askme.dto.ShowQuestionDTO;
 import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
 import com.czerniecka.askme.model.Question;
@@ -10,10 +11,12 @@ import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.AnswerRepository;
 import com.czerniecka.askme.repository.QuestionRepository;
+import org.hibernate.PropertyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +85,7 @@ public class AnswerServiceImpl implements AnswerService{
         }
     }
 
+
     @Override
     public Long addAnswer(AnswerDTO answerDTO, Long questionId, UserDetails userDetails) {
 
@@ -96,5 +100,35 @@ public class AnswerServiceImpl implements AnswerService{
         return -1L;
     }
 
+    @Override
+    public boolean editAnswer(Long answerId, AnswerDTO answerDTO, UserDetails userDetails) {
+
+        Answer answerToEdit = answerRepository.findById(answerId)
+                .orElseThrow(() -> new PropertyNotFoundException("Answer of id " + answerId + " not found"));
+
+        User user = (User) userDetails;
+        Optional<ShowAnswerDTO> answer = getAllByUser(user.getUserId())
+                .stream()
+                .filter(a -> a.answerId.equals(answerId))
+                .findAny();
+
+        if(answer.isPresent()){
+            answerToEdit.setBody(answerDTO.body);
+            answerToEdit.setDateAnswerGiven(LocalDateTime.now());
+            return true;
+        }
+        return false;
+
+    }
+
+    @Override
+    public List<ShowAnswerDTO> getAllByUser(Long userId) {
+        List<Answer> answers = answerRepository.findAll();
+
+        return answers.stream()
+                .filter(answer -> answer.getUser().getUserId().equals(userId))
+                .map(mapper::getAnswerDto)
+                .collect(Collectors.toList());
+    }
 
 }

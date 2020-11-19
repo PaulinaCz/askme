@@ -1,6 +1,7 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AnswerDTO;
+import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.service.AnswerService;
@@ -77,4 +78,16 @@ public class AnswerController {
             return new ResponseEntity("Answer of id" + answerId + "not found", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PutMapping("/editAnswer/{answerId}")
+    public ResponseEntity<AnswerDTO> editAnswer(@PathVariable Long answerId,
+                                                       @Valid @RequestBody AnswerDTO answerDTO,
+                                                       @AuthenticationPrincipal UserDetails userDetails)
+    {
+
+        answerService.editAnswer(answerId, answerDTO, userDetails);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }
