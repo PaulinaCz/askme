@@ -128,7 +128,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public void deleteAnswer(Long answerId, UserDetails userDetails) {
+    public boolean deleteAnswer(Long answerId, UserDetails userDetails) {
         Optional<Answer> answerOptional = answerRepository.findById(answerId);
         User user = (User) userDetails;
 
@@ -136,11 +136,15 @@ public class AnswerServiceImpl implements AnswerService{
             Answer answer = answerOptional.get();
             if(answer.getUser().getUserId().equals(user.getUserId())){
                 answerRepository.delete(answer);
+                return true;
+            }else{
+                throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
             }
-            throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
+
+        }else{
+            return false;
         }
 
-        throw new CustomException("Question " + answerId + " not found", HttpStatus.NOT_FOUND);
     }
 
 }
