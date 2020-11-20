@@ -76,6 +76,7 @@ public class QuestionServiceImpl implements QuestionService{
         if(questionToEdit.getUser().getUserId().equals(user.getUserId())){
             questionToEdit.setBody(questionDTO.body);
             questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
+            questionRepository.save(questionToEdit);
             return true;
         }
         return false;

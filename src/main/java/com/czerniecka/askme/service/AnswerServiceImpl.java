@@ -111,6 +111,7 @@ public class AnswerServiceImpl implements AnswerService{
         if(answerToEdit.getUser().getUserId().equals(user.getUserId())){
             answerToEdit.setBody(answerDTO.body);
             answerToEdit.setDateAnswerGiven(LocalDateTime.now());
+            answerRepository.save(answerToEdit);
             return true;
         }
         return false;
