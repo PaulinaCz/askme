@@ -86,8 +86,10 @@ public class QuestionController {
     public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId,
                                             @AuthenticationPrincipal UserDetails userDetails){
 
-        questionService.deleteQuestion(questionId, userDetails);
-        return ResponseEntity.ok("Question " + questionId + " deleted");
-
+        if(questionService.deleteQuestion(questionId, userDetails)){
+            return ResponseEntity.ok("Question " + questionId + " deleted");
+        }else{
+            return new ResponseEntity<>("Question " + questionId + " not found", HttpStatus.NOT_FOUND);
+        }
     }
 }

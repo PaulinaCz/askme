@@ -20,5 +20,5 @@ public interface QuestionService {
 
     List<ShowQuestionDTO> getAllByUser(Long userId);
 
-    void deleteQuestion(Long questionId, UserDetails userDetails);
+    boolean deleteQuestion(Long questionId, UserDetails userDetails);
 }

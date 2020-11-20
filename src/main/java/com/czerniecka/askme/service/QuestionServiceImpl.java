@@ -96,7 +96,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public void deleteQuestion(Long questionId, UserDetails userDetails) {
+    public boolean deleteQuestion(Long questionId, UserDetails userDetails) {
         Optional<Question> questionOptional = questionRepository.findById(questionId);
         User user = (User) userDetails;
 
@@ -104,11 +104,13 @@ public class QuestionServiceImpl implements QuestionService{
             Question question = questionOptional.get();
             if(question.getUser().getUserId().equals(user.getUserId())){
                 questionRepository.delete(question);
+                return true;
+            }else{
+                throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
             }
-            throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
+        }else{
+            return false;
         }
-
-        throw new CustomException("Question " + questionId + " not found", HttpStatus.NOT_FOUND);
 
     }
 }
