@@ -36,7 +36,7 @@ public class CommentController {
     }
 
     @GetMapping("/{answerId}/comments")
-    public ResponseEntity<List<ShowCommentDTO>> getAllCommentByAnswerId(@PathVariable Long answerId){
+    public ResponseEntity<List<ShowCommentDTO>> getCommentsByAnswerId(@PathVariable Long answerId){
 
         List<ShowCommentDTO> comments = commentService.getAllByAnswerId(answerId);
 
@@ -46,6 +46,18 @@ public class CommentController {
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
 
+    }
+
+    @GetMapping("/forUser/{userId}")
+    public ResponseEntity<List<ShowCommentDTO>> getCommentsByUser(@PathVariable Long userId){
+
+        List<ShowCommentDTO> comments = commentService.getAllByUser(userId);
+
+        if(comments.isEmpty()){
+            return new ResponseEntity("No comments for user " + userId + " found.", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PostMapping("/answers/{answerId}/comment")

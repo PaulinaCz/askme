@@ -14,4 +14,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT c From Comment c where c.answer.answerId = ?1 ORDER BY c.dateCommentCreated DESC ")
     List<Comment> getAllByAnswerId(Long answerId);
 
+    @Query(value = "SELECT c From Comment c where c.user.userId = ?1 ORDER BY c.dateCommentCreated DESC")
+    List<Comment> getAllByUser(Long userId);
+
 }

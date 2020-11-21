@@ -17,5 +17,7 @@ public interface CommentService {
 
     List<ShowCommentDTO> getAllByAnswerId(Long answerId);
 
+    List<ShowCommentDTO> getAllByUser(Long userId);
+
 
 }

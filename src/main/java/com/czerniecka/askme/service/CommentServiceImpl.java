@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -63,9 +62,14 @@ public class CommentServiceImpl implements CommentService{
 
         List<Comment> comments = commentRepository.getAllByAnswerId(answerId);
 
-        if(comments.isEmpty()){
-            return Collections.emptyList();
-        }
+        return comments.stream().map(mapper::getCommentDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ShowCommentDTO> getAllByUser(Long userId) {
+
+        List<Comment> comments = commentRepository.getAllByUser(userId);
+
         return comments.stream().map(mapper::getCommentDto).collect(Collectors.toList());
     }
 }
