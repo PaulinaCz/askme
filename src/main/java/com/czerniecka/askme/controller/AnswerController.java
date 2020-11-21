@@ -3,7 +3,6 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
-import com.czerniecka.askme.exception.CustomException;
 import com.czerniecka.askme.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +42,7 @@ public class AnswerController {
         List<ShowAnswerDTO> answers = answerService.getAllByQuestionId(questionId);
 
         if(answers.isEmpty()){
-            return new ResponseEntity("No answers for id " + questionId + " found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No answers for question " + questionId + " found", HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity(answers, HttpStatus.OK);
@@ -65,9 +64,8 @@ public class AnswerController {
 
     }
 
-    @PutMapping("/{questionId}/answer/{answerId}/rate")
-    public ResponseEntity<Void> rate(@PathVariable Long questionId,
-                                     @PathVariable Long answerId,
+    @PutMapping("/answer/{answerId}/rate")
+    public ResponseEntity<Void> rate(@PathVariable Long answerId,
                                      @RequestBody RatingDTO rating){
 
         boolean changed = answerService.changeRating(answerId, rating);
