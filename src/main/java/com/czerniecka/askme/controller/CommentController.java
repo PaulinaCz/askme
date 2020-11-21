@@ -35,31 +35,35 @@ public class CommentController {
 
     }
 
+    //raw use parametrized class
     @GetMapping("/{answerId}/comments")
     public ResponseEntity<List<ShowCommentDTO>> getCommentsByAnswerId(@PathVariable Long answerId){
 
         List<ShowCommentDTO> comments = commentService.getAllByAnswerId(answerId);
 
         if(comments.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No comments for answer " + answerId + " found.", HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
 
     }
 
+    //raw use parametrized class
     @GetMapping("/forUser/{userId}")
     public ResponseEntity<List<ShowCommentDTO>> getCommentsByUser(@PathVariable Long userId){
 
         List<ShowCommentDTO> comments = commentService.getAllByUser(userId);
 
         if(comments.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No comments for user " + userId + " found.", HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
+
+    //raw use parametrized class
     @PostMapping("/answers/{answerId}/comment")
    public ResponseEntity<Long> addComment(@Valid @RequestBody WriteCommentDTO writeCommentDTO,
                                                      @PathVariable Long answerId,
@@ -69,7 +73,7 @@ public class CommentController {
         Long commentId = commentService.addComment(writeCommentDTO, answerId, userDetails);
 
         if(commentId == -1){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Answer " + answerId + " not found.", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(commentId, HttpStatus.CREATED);
 

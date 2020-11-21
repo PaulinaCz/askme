@@ -42,10 +42,10 @@ public class AnswerController {
         List<ShowAnswerDTO> answers = answerService.getAllByQuestionId(questionId);
 
         if(answers.isEmpty()){
-            return new ResponseEntity("No answers for question " + questionId + " found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity(answers, HttpStatus.OK);
+        return new ResponseEntity<>(answers, HttpStatus.OK);
 
     }
 
@@ -55,10 +55,10 @@ public class AnswerController {
         List<ShowAnswerDTO> answers = answerService.getAllByUser(userId);
 
         if(answers.isEmpty()){
-            return new ResponseEntity("No answers for user " + userId + " found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity(answers, HttpStatus.OK);
+        return new ResponseEntity<>(answers, HttpStatus.OK);
     }
 
     @PostMapping("/{questionId}/answer")
@@ -68,16 +68,15 @@ public class AnswerController {
 
         Long answerId = answerService.addAnswer(answerDTO, questionId, userDetails);
 
-        if(answerId == -1){
-            return new ResponseEntity("Question of id " + questionId + " not found.", HttpStatus.NOT_FOUND);
+        if(answerId != -1){
+            return new ResponseEntity<>(answerId, HttpStatus.CREATED);
         }
-
-        return new ResponseEntity<>(answerId, HttpStatus.CREATED);
+        return new ResponseEntity("Question " + questionId + " not found", HttpStatus.NOT_FOUND);
 
     }
 
     @PutMapping("/answer/{answerId}/rate")
-    public ResponseEntity<Void> rate(@PathVariable Long answerId,
+    public ResponseEntity<String> rate(@PathVariable Long answerId,
                                      @Valid @RequestBody RatingDTO rating){
 
         boolean changed = answerService.changeRating(answerId, rating);
@@ -85,12 +84,12 @@ public class AnswerController {
         if(changed){
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else{
-            return new ResponseEntity("Answer of id" + answerId + "not found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Answer of id" + answerId + "not found", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/editAnswer/{answerId}")
-    public ResponseEntity<AnswerDTO> editAnswer(@PathVariable Long answerId,
+    public ResponseEntity<String> editAnswer(@PathVariable Long answerId,
                                                        @Valid @RequestBody AnswerDTO answerDTO,
                                                        @AuthenticationPrincipal UserDetails userDetails)
     {
@@ -98,12 +97,12 @@ public class AnswerController {
         if(answerService.editAnswer(answerId, answerDTO, userDetails)){
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else {
-            return new ResponseEntity("Can only edit your answer", HttpStatus.BAD_REQUEST);
+          return new ResponseEntity<>("Can only edit your answer", HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/deleteAnswer/{answerId}")
-    public ResponseEntity<?> deleteAnswer(@PathVariable Long answerId,
+    public ResponseEntity<String> deleteAnswer(@PathVariable Long answerId,
                                             @AuthenticationPrincipal UserDetails userDetails){
 
         if(answerService.deleteAnswer(answerId, userDetails)){
