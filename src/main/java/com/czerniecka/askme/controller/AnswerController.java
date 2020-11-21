@@ -37,7 +37,7 @@ public class AnswerController {
     }
 
     @GetMapping("/{questionId}/answers")
-    public ResponseEntity<List<ShowAnswerDTO>> getAllByQuestionId(@PathVariable Long questionId){
+    public ResponseEntity<List<ShowAnswerDTO>> getAnswersByQuestionId(@PathVariable Long questionId){
 
         List<ShowAnswerDTO> answers = answerService.getAllByQuestionId(questionId);
 
@@ -50,7 +50,7 @@ public class AnswerController {
     }
 
     @GetMapping("/forUser/{userId}")
-    public ResponseEntity<List<ShowAnswerDTO>> getAllByUser(@PathVariable Long userId){
+    public ResponseEntity<List<ShowAnswerDTO>> getAnswersByUser(@PathVariable Long userId){
 
         List<ShowAnswerDTO> answers = answerService.getAllByUser(userId);
 

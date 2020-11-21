@@ -26,7 +26,7 @@ public class QuestionController {
         this.questionService = questionService;
     }
 
-    @GetMapping("/{questionId}")
+    @GetMapping("/question/{questionId}")
     public ResponseEntity<ShowQuestionDTO> getQuestionById(@PathVariable Long questionId){
 
         Optional<ShowQuestionDTO> question = questionService.getById(questionId);
@@ -37,7 +37,7 @@ public class QuestionController {
     }
 
     @GetMapping("/forUser/{userId}")
-    public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUserId(@PathVariable Long userId){
+    public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUser(@PathVariable Long userId){
 
         List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(userId);
 
