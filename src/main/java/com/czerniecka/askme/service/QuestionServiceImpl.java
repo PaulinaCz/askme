@@ -39,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService{
         if(questionOptional.isEmpty()){
             return Optional.empty();
         }else {
-            return mapper.getQuestionDto(questionOptional);
+            return mapper.getOptionalQuestionDto(questionOptional);
         }
 
     }
@@ -50,7 +50,7 @@ public class QuestionServiceImpl implements QuestionService{
         List<Question> questions = questionRepository.findAll();
 
         return questions.stream()
-                .map(question -> mapper.getQuestionDto(Optional.of(question))
+                .map(question -> mapper.getOptionalQuestionDto(Optional.of(question))
                         .orElseThrow())
                 .collect(Collectors.toList());
 
@@ -90,7 +90,7 @@ public class QuestionServiceImpl implements QuestionService{
 
         return questions.stream()
                 .filter(question -> question.getUser().getUserId().equals(userId))
-                .map(q ->mapper.getQuestionDto(Optional.of(q))
+                .map(q ->mapper.getOptionalQuestionDto(Optional.of(q))
                         .orElseThrow())
                 .collect(Collectors.toList());
 

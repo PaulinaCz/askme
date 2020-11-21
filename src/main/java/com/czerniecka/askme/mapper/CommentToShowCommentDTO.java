@@ -2,12 +2,20 @@ package com.czerniecka.askme.mapper;
 
 import com.czerniecka.askme.dto.ShowCommentDTO;
 import com.czerniecka.askme.model.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class CommentToShowCommentDTO {
+
+    public final UserToShowUserDTO mapper;
+
+    @Autowired
+    public CommentToShowCommentDTO(UserToShowUserDTO mapper) {
+        this.mapper = mapper;
+    }
 
     public Optional<ShowCommentDTO> getOptionalCommentDto(Optional<Comment> optionalComment){
 
@@ -19,7 +27,7 @@ public class CommentToShowCommentDTO {
             ShowCommentDTO commentDTO = new ShowCommentDTO();
 
             commentDTO.commentId = comment.getCommentId();
-            commentDTO.user = comment.getUser();
+            commentDTO.userDto = mapper.getUserDTO(comment.getUser());
             commentDTO.body = comment.getBody();
             commentDTO.dateCommentCreated = comment.getDateCommentCreated();
 
@@ -32,7 +40,7 @@ public class CommentToShowCommentDTO {
         ShowCommentDTO commentDTO = new ShowCommentDTO();
 
         commentDTO.commentId = comment.getCommentId();
-        commentDTO.user = comment.getUser();
+        commentDTO.userDto = mapper.getUserDTO(comment.getUser());
         commentDTO.body = comment.getBody();
         commentDTO.dateCommentCreated = comment.getDateCommentCreated();
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class QuestionToShowQuestionDTO {
 
-    public Optional<ShowQuestionDTO> getQuestionDto(Optional<Question> questionOptional){
+    public Optional<ShowQuestionDTO> getOptionalQuestionDto(Optional<Question> questionOptional){
 
         if(questionOptional.isEmpty()){
             return Optional.empty();
@@ -27,6 +27,19 @@ public class QuestionToShowQuestionDTO {
             return Optional.of(questionDTO);
 
         }
+
+    }
+
+    public ShowQuestionDTO getQuestionDTO(Question question){
+
+        ShowQuestionDTO questionDTO = new ShowQuestionDTO();
+
+        questionDTO.questionId = question.getQuestionId();
+        questionDTO.username = question.getUser().getUsername();
+        questionDTO.body = question.getBody();
+        questionDTO.timeQuestionAsked = question.getTimeQuestionAsked();
+
+        return questionDTO;
 
     }
 

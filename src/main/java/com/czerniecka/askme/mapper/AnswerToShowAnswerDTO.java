@@ -2,12 +2,20 @@ package com.czerniecka.askme.mapper;
 
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class AnswerToShowAnswerDTO {
+
+    public final QuestionToShowQuestionDTO mapper;
+
+    @Autowired
+    public AnswerToShowAnswerDTO(QuestionToShowQuestionDTO mapper) {
+        this.mapper = mapper;
+    }
 
     public Optional<ShowAnswerDTO> getOptionalAnswerDto(Optional<Answer> answerOptional){
 
@@ -18,9 +26,9 @@ public class AnswerToShowAnswerDTO {
             ShowAnswerDTO answerDTO = new ShowAnswerDTO();
 
             answerDTO.answerId = answer.getAnswerId();
-            answerDTO.user = answer.getUser();
-            answerDTO.question = answer.getQuestion();
-            answerDTO.body = answer.getBody();
+            answerDTO.username = answer.getUser().getUsername();
+            answerDTO.questionId = answer.getQuestion().getQuestionId();
+            answerDTO.questionDTO = mapper.getQuestionDTO(answer.getQuestion());
             answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
             answerDTO.rating = answer.getRating();
 
@@ -33,9 +41,9 @@ public class AnswerToShowAnswerDTO {
         ShowAnswerDTO answerDTO = new ShowAnswerDTO();
 
         answerDTO.answerId = answer.getAnswerId();
-        answerDTO.user = answer.getUser();
-        answerDTO.question = answer.getQuestion();
-        answerDTO.body = answer.getBody();
+        answerDTO.username = answer.getUser().getUsername();
+        answerDTO.questionId = answer.getQuestion().getQuestionId();
+        answerDTO.questionDTO = mapper.getQuestionDTO(answer.getQuestion());
         answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
         answerDTO.rating = answer.getRating();
 
