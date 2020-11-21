@@ -70,7 +70,7 @@ public class QuestionController {
     }
 
     @PutMapping("/editQuestion/{questionId}")
-    public ResponseEntity<AskQuestionDTO> editQuestion(@PathVariable Long questionId,
+    public ResponseEntity<String> editQuestion(@PathVariable Long questionId,
                                                        @Valid @RequestBody AskQuestionDTO questionDTO,
                                                         @AuthenticationPrincipal UserDetails userDetails)
     {
@@ -78,12 +78,12 @@ public class QuestionController {
         if(questionService.editQuestion(questionId, questionDTO, userDetails)){
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else {
-            return new ResponseEntity("Can only edit your question", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Can only edit your question", HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/deleteQuestion/{questionId}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId,
+    public ResponseEntity<String> deleteQuestion(@PathVariable Long questionId,
                                             @AuthenticationPrincipal UserDetails userDetails){
 
         if(questionService.deleteQuestion(questionId, userDetails)){
