@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class ShowQuestionDTO {
 
     public Long questionId;
-    public String username;
+    public ShowUserDto userDto;
     public String body;
     public LocalDateTime timeQuestionAsked;
 }

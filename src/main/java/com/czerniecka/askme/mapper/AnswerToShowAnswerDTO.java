@@ -11,10 +11,12 @@ import java.util.Optional;
 public class AnswerToShowAnswerDTO {
 
     public final QuestionToShowQuestionDTO mapper;
+    public final UserToShowUserDTO userMapper;
 
     @Autowired
-    public AnswerToShowAnswerDTO(QuestionToShowQuestionDTO mapper) {
+    public AnswerToShowAnswerDTO(QuestionToShowQuestionDTO mapper, UserToShowUserDTO userMapper) {
         this.mapper = mapper;
+        this.userMapper = userMapper;
     }
 
     public Optional<ShowAnswerDTO> getOptionalAnswerDto(Optional<Answer> answerOptional){
@@ -26,8 +28,7 @@ public class AnswerToShowAnswerDTO {
             ShowAnswerDTO answerDTO = new ShowAnswerDTO();
 
             answerDTO.answerId = answer.getAnswerId();
-            answerDTO.username = answer.getUser().getUsername();
-            answerDTO.questionId = answer.getQuestion().getQuestionId();
+            answerDTO.userDto = userMapper.getUserDTO(answer.getUser());
             answerDTO.questionDTO = mapper.getQuestionDTO(answer.getQuestion());
             answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
             answerDTO.rating = answer.getRating();
@@ -41,8 +42,7 @@ public class AnswerToShowAnswerDTO {
         ShowAnswerDTO answerDTO = new ShowAnswerDTO();
 
         answerDTO.answerId = answer.getAnswerId();
-        answerDTO.username = answer.getUser().getUsername();
-        answerDTO.questionId = answer.getQuestion().getQuestionId();
+        answerDTO.userDto = userMapper.getUserDTO(answer.getUser());
         answerDTO.questionDTO = mapper.getQuestionDTO(answer.getQuestion());
         answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
         answerDTO.rating = answer.getRating();
