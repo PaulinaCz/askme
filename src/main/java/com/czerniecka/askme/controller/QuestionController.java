@@ -42,7 +42,7 @@ public class QuestionController {
         List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(userId);
 
         if(questionsByUser.isEmpty()){
-            return new ResponseEntity("User " + userId + " not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("No question found for user  " + userId , HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(questionsByUser, HttpStatus.OK);
