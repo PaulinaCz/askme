@@ -35,7 +35,6 @@ public class CommentController {
 
     }
 
-    //raw use parametrized class
     @GetMapping("/{answerId}/comments")
     public ResponseEntity<List<ShowCommentDTO>> getCommentsByAnswerId(@PathVariable Long answerId){
 
@@ -49,7 +48,6 @@ public class CommentController {
 
     }
 
-    //raw use parametrized class
     @GetMapping("/forUser/{userId}")
     public ResponseEntity<List<ShowCommentDTO>> getCommentsByUser(@PathVariable Long userId){
 
@@ -63,7 +61,6 @@ public class CommentController {
     }
 
 
-    //raw use parametrized class
     @PostMapping("/answers/{answerId}/comment")
    public ResponseEntity<Long> addComment(@Valid @RequestBody WriteCommentDTO writeCommentDTO,
                                                      @PathVariable Long answerId,
