@@ -41,7 +41,7 @@ public class CommentController {
         List<ShowCommentDTO> comments = commentService.getAllByAnswerId(answerId);
 
         if(comments.isEmpty()){
-            return new ResponseEntity("No comments for answer " + answerId + " found.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class CommentController {
         List<ShowCommentDTO> comments = commentService.getAllByUser(userId);
 
         if(comments.isEmpty()){
-            return new ResponseEntity("No comments for user " + userId + " found.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
@@ -69,7 +69,7 @@ public class CommentController {
         Long commentId = commentService.addComment(writeCommentDTO, answerId, userDetails);
 
         if(commentId == -1){
-            return new ResponseEntity("Answer " + answerId + " not found.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(commentId, HttpStatus.CREATED);
 
