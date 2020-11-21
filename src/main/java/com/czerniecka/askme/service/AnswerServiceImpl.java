@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,9 +53,6 @@ public class AnswerServiceImpl implements AnswerService{
 
         List<Answer> answers = answerRepository.getAllByQuestionId(questionId);
 
-        if(answers.isEmpty()){
-            return Collections.emptyList();
-        }
         return answers.stream().map(mapper::getAnswerDto).collect(Collectors.toList());
 
     }
