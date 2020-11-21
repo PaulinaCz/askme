@@ -107,10 +107,10 @@ public class QuestionServiceImpl implements QuestionService{
                 questionRepository.delete(question);
                 return true;
             }else{
-                throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
+                return false;
             }
         }else{
-            return false;
+            throw  new CustomException("Question of id " + questionId + " not found", HttpStatus.NOT_FOUND);
         }
 
     }

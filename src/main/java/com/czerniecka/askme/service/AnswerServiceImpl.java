@@ -62,17 +62,16 @@ public class AnswerServiceImpl implements AnswerService{
 
         Optional<Answer> answerOptional = answerRepository.findById(answerId);
 
-        Rating r = null;
         if(rating.rate == 1){
-            r = Rating.USEFUL;
+            rating.rate = Rating.USEFUL.getRate();
         }else if(rating.rate == -1){
-            r = Rating.NOTUSEFUL;
+            rating.rate = Rating.NOTUSEFUL.getRate();
         }
 
         if(answerOptional.isPresent()){
             Answer answer = answerOptional.get();
             Long currentRate = answer.getRating();
-            answer.setRating(currentRate + r.getRate());
+            answer.setRating(currentRate + rating.rate);
             answerRepository.save(answer);
             return true;
         }
@@ -135,7 +134,7 @@ public class AnswerServiceImpl implements AnswerService{
                 answerRepository.delete(answer);
                 return true;
             }else{
-                throw new CustomException("This method is now allowed", HttpStatus.METHOD_NOT_ALLOWED);
+                throw new CustomException("Answer of id " + answerId + " not found", HttpStatus.NOT_FOUND);
             }
 
         }else{

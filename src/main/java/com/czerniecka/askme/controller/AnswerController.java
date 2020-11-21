@@ -78,7 +78,7 @@ public class AnswerController {
 
     @PutMapping("/answer/{answerId}/rate")
     public ResponseEntity<Void> rate(@PathVariable Long answerId,
-                                     @RequestBody RatingDTO rating){
+                                     @Valid @RequestBody RatingDTO rating){
 
         boolean changed = answerService.changeRating(answerId, rating);
 
@@ -98,7 +98,7 @@ public class AnswerController {
         if(answerService.editAnswer(answerId, answerDTO, userDetails)){
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else {
-            return new ResponseEntity("Can only edit answer you given", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Can only edit your answer", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -109,7 +109,7 @@ public class AnswerController {
         if(answerService.deleteAnswer(answerId, userDetails)){
             return ResponseEntity.ok("Answer " + answerId + " deleted");
         }else{
-            return new ResponseEntity<>("Answer " + answerId + " not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Can only delete your answer", HttpStatus.BAD_REQUEST);
         }
 
     }

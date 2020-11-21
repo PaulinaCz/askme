@@ -78,7 +78,7 @@ public class QuestionController {
         if(questionService.editQuestion(questionId, questionDTO, userDetails)){
             return new ResponseEntity<>(HttpStatus.CREATED);
         }else {
-            return new ResponseEntity("Can only edit question you asked", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Can only edit your question", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -89,7 +89,7 @@ public class QuestionController {
         if(questionService.deleteQuestion(questionId, userDetails)){
             return ResponseEntity.ok("Question " + questionId + " deleted");
         }else{
-            return new ResponseEntity<>("Question " + questionId + " not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Can only delete your question", HttpStatus.BAD_REQUEST);
         }
     }
 }
