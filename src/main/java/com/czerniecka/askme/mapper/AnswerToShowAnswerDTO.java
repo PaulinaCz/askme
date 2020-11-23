@@ -30,6 +30,7 @@ public class AnswerToShowAnswerDTO {
             answerDTO.answerId = answer.getAnswerId();
             answerDTO.userDto = userMapper.getUserDTO(answer.getUser());
             answerDTO.questionDTO = mapper.getQuestionDTO(answer.getQuestion());
+            answerDTO.body = answer.getBody();
             answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
             answerDTO.rating = answer.getRating();
 
@@ -44,6 +45,7 @@ public class AnswerToShowAnswerDTO {
         answerDTO.answerId = answer.getAnswerId();
         answerDTO.userDto = userMapper.getUserDTO(answer.getUser());
         answerDTO.questionDTO = mapper.getQuestionDTO(answer.getQuestion());
+        answerDTO.body = answer.getBody();
         answerDTO.dateAnswerGiven = answer.getDateAnswerGiven();
         answerDTO.rating = answer.getRating();
 
