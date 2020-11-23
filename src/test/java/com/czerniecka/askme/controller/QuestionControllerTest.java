@@ -65,7 +65,7 @@ class QuestionControllerTest {
     void shouldSendQuestionWhenAuthenticatedUser() {
 
     }
-
+    
     @Test
     void editQuestion() {
     }
