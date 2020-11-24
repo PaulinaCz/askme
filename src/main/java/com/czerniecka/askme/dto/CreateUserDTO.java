@@ -16,7 +16,7 @@ public class CreateUserDTO {
     public String surname;
 
     @NotBlank(message = "Please provide a surname")
-    @Size(min = 3, message = "Surname must be longer than 3 characters")
+    @Size(min = 3, message = "Username must be longer than 3 characters")
     public String username;
 
     @NotBlank(message = "Email is required")
