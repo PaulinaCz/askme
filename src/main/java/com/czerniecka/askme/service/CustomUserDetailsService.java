@@ -1,14 +1,18 @@
 package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.CreateUserDTO;
+import com.czerniecka.askme.exception.CustomException;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService, UserService {
@@ -31,7 +35,14 @@ public class CustomUserDetailsService implements UserDetailsService, UserService
     @Override
     public void register(CreateUserDTO userDTO){
         String hashedPassword = passwordEncoder.encode(userDTO.password);
-        User user = new User(userDTO.name, userDTO.surname, userDTO.username, userDTO.email, hashedPassword);
-        userRepository.save(user);
+
+        Optional<User> notUniqueUsername = userRepository.findByUsername(userDTO.username);
+        if(notUniqueUsername.isPresent())
+        {
+            throw new CustomException("Username " + userDTO.username + " already exists", HttpStatus.CONFLICT);
+        }else {
+            User user = new User(userDTO.name, userDTO.surname, userDTO.username, userDTO.email, hashedPassword);
+            userRepository.save(user);
+        }
     }
 }
