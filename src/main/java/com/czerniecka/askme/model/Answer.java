@@ -3,6 +3,8 @@ package com.czerniecka.askme.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,6 +33,7 @@ public class Answer {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnore
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments;
     private String body;
     private LocalDateTime dateAnswerGiven;

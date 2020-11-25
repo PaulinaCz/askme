@@ -1,9 +1,9 @@
 package com.czerniecka.askme.model;
 
-import lombok.Builder;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -28,7 +27,7 @@ public class User implements UserDetails {
     private LocalDateTime dateCreated;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    //@Builder.Default
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<String> roles = new ArrayList<>();
 
     public User(String name, String surname,String username, String email, String password) {

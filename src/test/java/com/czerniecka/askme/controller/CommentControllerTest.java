@@ -3,7 +3,6 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.TestAuthenticatedUser;
 import com.czerniecka.askme.dto.*;
 import com.czerniecka.askme.model.User;
-import com.czerniecka.askme.repository.AnswerRepository;
 import com.czerniecka.askme.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +39,6 @@ class CommentControllerTest {
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    AnswerRepository answerRepository;
 
     @Autowired
     TestAuthenticatedUser authUser;
