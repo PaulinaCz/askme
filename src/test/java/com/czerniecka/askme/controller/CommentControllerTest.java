@@ -1,13 +1,12 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.TestAuthenticatedUser;
-import com.czerniecka.askme.dto.AnswerDTO;
-import com.czerniecka.askme.dto.AskQuestionDTO;
-import com.czerniecka.askme.dto.ShowAnswerDTO;
-import com.czerniecka.askme.dto.ShowCommentDTO;
+import com.czerniecka.askme.dto.*;
 import com.czerniecka.askme.model.Answer;
 import com.czerniecka.askme.model.Comment;
 import com.czerniecka.askme.model.User;
+import com.czerniecka.askme.repository.AnswerRepository;
+import com.czerniecka.askme.repository.QuestionRepository;
 import com.czerniecka.askme.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,6 +44,8 @@ class CommentControllerTest {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AnswerRepository answerRepository;
 
     @Autowired
     TestAuthenticatedUser authUser;
@@ -66,28 +68,28 @@ class CommentControllerTest {
                 .andExpect(status().isForbidden());
 
     }
-//
-//    @Test
-//    void shouldReturnListOfCommentsByAnswerId() {
-//
-//        User answeringUser = authUser.authenticatedUser("ann", "Password123.");
-//        UserDetails commentingUser = authUser.authenticatedUser("mary", "Mary123.");
-//
-//
-//        List<Comment> comments = List.of(new Comment(), new Comment(), new Comment());
-//
-//
-//
-//        ResponseEntity<Long> questionResponse = questionController.sendQuestion(new AskQuestionDTO(), commentingUser);
-//        ResponseEntity<Long> answerResponse = answerController.addAnswer(new AnswerDTO(), questionResponse.getBody(), answeringUser);
-//
-//        ResponseEntity<ShowAnswerDTO> answerById = answerController.getAnswerById(answerResponse.getBody());
-//
-//
-//        ResponseEntity<List<ShowCommentDTO>> commentsByAnswerId = commentController.getCommentsByAnswerId(answer.getAnswerId());
-//        int commentsListSize = commentsByAnswerId.getBody().size();
-//
-//        assertEquals(3, commentsListSize);
-//
-//    }
+
+    @Test
+    void shouldReturnListOfCommentsByAnswerId() {
+
+        User user1 = authUser.authenticatedUser("ann", "Password123.");
+        UserDetails user2 = authUser.authenticatedUser("mary", "Mary123.");
+
+        ResponseEntity<Long> questionResponse = questionController.sendQuestion(new AskQuestionDTO(), user2);
+        assertEquals(HttpStatus.CREATED, questionResponse.getStatusCode());
+
+        ResponseEntity<Long> answerResponse = answerController.addAnswer(new AnswerDTO(), questionResponse.getBody(), user1);
+        assertEquals(HttpStatus.CREATED, answerResponse.getStatusCode());
+
+        Long answerId = answerResponse.getBody();
+        commentController.addComment(new WriteCommentDTO(), answerId, user2);
+        commentController.addComment(new WriteCommentDTO(), answerId, user2);
+        commentController.addComment(new WriteCommentDTO(), answerId, user2);
+
+        ResponseEntity<List<ShowCommentDTO>> commentsByAnswerId = commentController.getCommentsByAnswerId(answerId);
+        int size = commentsByAnswerId.getBody().size();
+
+        assertEquals(3, size);
+
+    }
 }

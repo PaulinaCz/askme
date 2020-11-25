@@ -26,7 +26,8 @@ public class Answer {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "answer",
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "answer",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnore
