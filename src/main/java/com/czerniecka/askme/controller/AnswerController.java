@@ -108,7 +108,7 @@ public class AnswerController {
         if(answerService.deleteAnswer(answerId, userDetails)){
             return ResponseEntity.ok("Answer " + answerId + " deleted");
         }else{
-            return new ResponseEntity<>("Can only delete your answer", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Answer of id " + answerId + " not found", HttpStatus.NOT_FOUND);
         }
 
     }

@@ -71,15 +71,14 @@ public class QuestionServiceImpl implements QuestionService{
                 .orElseThrow(() -> new CustomException("Question of id " + questionId + " not found", HttpStatus.NOT_FOUND));
 
 
-        User user = (User) userDetails;
-
-        if(questionToEdit.getUser().getUserId().equals(user.getUserId())){
+        if(questionToEdit.getUser().getUserId().equals(((User) userDetails).getUserId())){
             questionToEdit.setBody(questionDTO.body);
             questionToEdit.setTimeQuestionAsked(LocalDateTime.now());
             questionRepository.save(questionToEdit);
             return true;
+        }else{
+            return false;
         }
-        return false;
 
     }
 

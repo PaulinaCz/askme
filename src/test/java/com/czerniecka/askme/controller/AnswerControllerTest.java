@@ -2,7 +2,6 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.TestAuthenticatedUser;
 import com.czerniecka.askme.dto.*;
-import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.service.AnswerService;
 import org.junit.jupiter.api.Test;
@@ -12,15 +11,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class AnswerControllerTest {
 
     @Autowired
@@ -88,6 +89,31 @@ class AnswerControllerTest {
         ShowAnswerDTO aDTO = showAnswerResponse.getBody();
 
         assertEquals(1L, aDTO.rating);
+
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenDeleteExistingAnswer(){
+        AskQuestionDTO questionDTO = new AskQuestionDTO();
+        questionDTO.body = "Is it right?";
+
+        AnswerDTO answerDTO = new AnswerDTO();
+        answerDTO.body = "No.";
+        UserDetails user = authUser.authenticatedUser("john", "Password123.");
+
+        ResponseEntity<Long> questionResponse = questionController.sendQuestion(questionDTO, user);
+        Long questionId = questionResponse.getBody();
+        ResponseEntity<Long> answerResponse = answerController.addAnswer(answerDTO, questionId, user);
+
+        assertEquals(HttpStatus.CREATED, answerResponse.getStatusCode());
+
+        Long answerId = answerResponse.getBody();
+
+        ResponseEntity<String> deleteResponse = answerController.deleteAnswer(answerId, user);
+        assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
+
+        ResponseEntity<ShowAnswerDTO> findResponse = answerController.getAnswerById(answerId);
+        assertEquals(HttpStatus.NOT_FOUND, findResponse.getStatusCode());
 
     }
 }

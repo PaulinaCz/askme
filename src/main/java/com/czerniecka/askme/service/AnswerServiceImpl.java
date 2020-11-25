@@ -134,9 +134,8 @@ public class AnswerServiceImpl implements AnswerService{
                 answerRepository.delete(answer);
                 return true;
             }else{
-                throw new CustomException("Answer of id " + answerId + " not found", HttpStatus.NOT_FOUND);
+                throw new CustomException("Can only delete your answer", HttpStatus.BAD_REQUEST);
             }
-
         }else{
             return false;
         }

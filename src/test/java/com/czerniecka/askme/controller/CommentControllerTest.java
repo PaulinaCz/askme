@@ -2,11 +2,8 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.TestAuthenticatedUser;
 import com.czerniecka.askme.dto.*;
-import com.czerniecka.askme.model.Answer;
-import com.czerniecka.askme.model.Comment;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.AnswerRepository;
-import com.czerniecka.askme.repository.QuestionRepository;
 import com.czerniecka.askme.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +14,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class CommentControllerTest {
 
     @Autowired

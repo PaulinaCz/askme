@@ -31,8 +31,11 @@ public class QuestionController {
 
         Optional<ShowQuestionDTO> question = questionService.getById(questionId);
 
-        return question.map(showQuestionDTO -> new ResponseEntity<>(showQuestionDTO, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if(question.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity(question.get(), HttpStatus.OK);
+        }
 
     }
 
