@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 class QuestionControllerTest {
 
     @Autowired
@@ -42,10 +41,6 @@ class QuestionControllerTest {
 
     @Autowired
     private QuestionController questionController;
-
-    @Autowired
-    QuestionRepository questionRepository;
-
 
     @Test
     void shouldReturnListOfAllQuestions() throws Exception {
@@ -83,7 +78,8 @@ class QuestionControllerTest {
         ResponseEntity<Long> response = questionController.sendQuestion(question, user);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        ResponseEntity<ShowQuestionDTO> questionById = questionController.getQuestionById(response.getBody());
+        Long questionId = response.getBody();
+        ResponseEntity<ShowQuestionDTO> questionById = questionController.getQuestionById(questionId);
         assertEquals(HttpStatus.OK, questionById.getStatusCode());
         ShowQuestionDTO qDTO = questionById.getBody();
         assertEquals(user.getUsername(), qDTO.userDto.username);
@@ -97,7 +93,7 @@ class QuestionControllerTest {
 
         question.body = "Question body?";
 
-        UserDetails user = authUser.authenticatedUser("john", "Password123.");
+        UserDetails user = authUser.authenticatedUser("Glenn", "Password123.");
         ResponseEntity<Long> response = questionController.sendQuestion(question, user);
         Long questionId = response.getBody();
         AskQuestionDTO edit = new AskQuestionDTO();
