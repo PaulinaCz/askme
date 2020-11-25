@@ -1,10 +1,8 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.TestAuthenticatedUser;
-import com.czerniecka.askme.dto.AnswerDTO;
-import com.czerniecka.askme.dto.LoginUserDTO;
-import com.czerniecka.askme.dto.RatingDTO;
-import com.czerniecka.askme.dto.ShowAnswerDTO;
+import com.czerniecka.askme.dto.*;
+import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.Rating;
 import com.czerniecka.askme.service.AnswerService;
 import org.junit.jupiter.api.Test;
@@ -40,6 +38,8 @@ class AnswerControllerTest {
     @Autowired
     AuthController authController;
 
+    @Autowired
+    QuestionController questionController;
 
     @Test
     void shouldReturn403WhenUserNotAuthenticated() throws Exception {
@@ -63,21 +63,31 @@ class AnswerControllerTest {
 
     @Test
     void shouldUpdateRating() {
+        AskQuestionDTO questionDTO = new AskQuestionDTO();
+        questionDTO.body = "Is is?";
 
         AnswerDTO answerDTO = new AnswerDTO();
         answerDTO.body = "Yup.";
         UserDetails user = authUser.authenticatedUser("john", "Password123.");
+
         RatingDTO rating = new RatingDTO();
         rating.rate = Rating.USEFUL.getRate();
 
-        ResponseEntity<Long> longResponse = answerController.addAnswer(answerDTO, 1L, user);
-        Long index = longResponse.getBody();
-        answerController.rate(index, rating);
-        ResponseEntity<ShowAnswerDTO> response = answerController.getAnswerById(index);
-        ShowAnswerDTO aDTO = response.getBody();
+        ResponseEntity<Long> questionResponse = questionController.sendQuestion(questionDTO, user);
 
-        assertEquals(1, aDTO.rating);
+        assertEquals(HttpStatus.CREATED, questionResponse.getStatusCode());
 
+        Long questionId = questionResponse.getBody();
+        ResponseEntity<Long> answerResponse = answerController.addAnswer(answerDTO, questionId, user);
+
+        assertEquals(HttpStatus.CREATED, answerResponse.getStatusCode());
+
+        Long answerId = answerResponse.getBody();
+        answerController.rate(answerId, rating);
+        ResponseEntity<ShowAnswerDTO> showAnswerResponse = answerController.getAnswerById(answerId);
+        ShowAnswerDTO aDTO = showAnswerResponse.getBody();
+
+        assertEquals(1L, aDTO.rating);
 
     }
 }

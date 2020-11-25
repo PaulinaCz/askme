@@ -24,7 +24,8 @@ public class Question {
     private String body;
     private LocalDateTime timeQuestionAsked;
 
-    @OneToMany(mappedBy = "question",
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "question",
                 cascade = CascadeType.ALL,
                 orphanRemoval = true)
     @JsonIgnore
