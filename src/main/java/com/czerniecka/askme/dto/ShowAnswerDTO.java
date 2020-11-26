@@ -2,13 +2,13 @@ package com.czerniecka.askme.dto;
 
 import java.time.LocalDateTime;
 
-public class ShowAnswerDTO {
+public interface ShowAnswerDTO {
 
-    public Long answerId;
-    public ShowUserDto userDto;
-    public ShowQuestionDTO questionDTO;
-    public String body;
-    public LocalDateTime dateAnswerGiven;
-    public Long rating;
+    Long getAnswerId();
+    ShowUserDto getUser();
+    ShowQuestionDTO getQuestion();
+    String getBody();
+    LocalDateTime getDateAnswerGiven();
+    Long getRating();
 
 }

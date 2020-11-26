@@ -88,7 +88,7 @@ class AnswerControllerTest {
         ResponseEntity<ShowAnswerDTO> showAnswerResponse = answerController.getAnswerById(answerId);
         ShowAnswerDTO aDTO = showAnswerResponse.getBody();
 
-        assertEquals(1L, aDTO.rating);
+        assertEquals(1L, aDTO.getRating());
 
     }
 

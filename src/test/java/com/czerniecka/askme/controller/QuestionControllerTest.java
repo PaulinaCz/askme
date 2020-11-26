@@ -41,21 +41,21 @@ class QuestionControllerTest {
 
     @Autowired
     private QuestionController questionController;
-
-    @Test
-    void shouldReturnListOfAllQuestions() throws Exception {
-
-        List<ShowQuestionDTO> all = List.of(new ShowQuestionDTO(),
-                new ShowQuestionDTO(), new ShowQuestionDTO());
-
-        when(questionService.getAll()).thenReturn(all);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/questions/allQuestions"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(all.size())))
-                .andExpect(status().isOk());
-
-
-    }
+//
+//    @Test
+//    void shouldReturnListOfAllQuestions() throws Exception {
+//
+////        List<ShowQuestionDTO> all = List.of(new ShowQuestionDTO(),
+////                new ShowQuestionDTO(), new ShowQuestionDTO());
+//
+//        when(questionService.getAll()).thenReturn(all);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/questions/allQuestions"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(all.size())))
+//                .andExpect(status().isOk());
+//
+//
+//    }
 
     @Test
     void shouldReturn404WhenQuestionDoesntExist(){

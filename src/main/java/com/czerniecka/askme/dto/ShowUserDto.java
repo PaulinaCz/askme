@@ -1,8 +1,8 @@
 package com.czerniecka.askme.dto;
 
-public class ShowUserDto {
+public interface ShowUserDto {
 
-    public Long userId;
-    public String username;
+    Long getUserId();
+    String getUsername();
 
 }

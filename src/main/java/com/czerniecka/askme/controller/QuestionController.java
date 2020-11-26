@@ -3,6 +3,8 @@ package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
+import com.czerniecka.askme.model.User;
+import com.czerniecka.askme.repository.UserRepository;
 import com.czerniecka.askme.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +22,12 @@ import java.util.Optional;
 public class QuestionController {
 
     private QuestionService questionService;
+    private UserRepository userRepository;
 
     @Autowired
-    public QuestionController(QuestionService questionService) {
+    public QuestionController(QuestionService questionService, UserRepository userRepository) {
         this.questionService = questionService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/question/{questionId}")
@@ -39,7 +43,8 @@ public class QuestionController {
     @GetMapping("/forUser/{userId}")
     public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUser(@PathVariable Long userId){
 
-        List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(userId);
+        User user = userRepository.findById(userId).get();
+        List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(user);
 
         if(questionsByUser.isEmpty()){
             return new ResponseEntity("No question found for user  " + userId , HttpStatus.NOT_FOUND);

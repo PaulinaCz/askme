@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +25,7 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private LocalDateTime dateCreated;
+    private LocalDate dateCreated;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -36,7 +37,7 @@ public class User implements UserDetails {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.dateCreated = LocalDateTime.now();
+        this.dateCreated = LocalDate.now();
     }
 
     public User() {

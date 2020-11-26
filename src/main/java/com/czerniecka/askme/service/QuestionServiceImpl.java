@@ -3,7 +3,6 @@ package com.czerniecka.askme.service;
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
 import com.czerniecka.askme.exception.CustomException;
-import com.czerniecka.askme.mapper.QuestionToShowQuestionDTO;
 import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.QuestionRepository;
@@ -16,43 +15,29 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService{
 
     private final QuestionRepository questionRepository;
-    private final QuestionToShowQuestionDTO mapper;
 
 
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository, QuestionToShowQuestionDTO mapper) {
+    public QuestionServiceImpl(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-        this.mapper = mapper;
     }
 
     @Override
     public Optional<ShowQuestionDTO> getById(Long questionId) {
 
-        Optional<Question> questionOptional = questionRepository.findById(questionId);
-
-        if(questionOptional.isEmpty()){
-            return Optional.empty();
-        }else {
-            return mapper.getOptionalQuestionDto(questionOptional);
-        }
+       return questionRepository.getOneByQuestionId(questionId);
 
     }
 
     @Override
     public List<ShowQuestionDTO> getAll() {
 
-        List<Question> questions = questionRepository.findAll();
-
-        return questions.stream()
-                .map(question -> mapper.getOptionalQuestionDto(Optional.of(question))
-                        .orElseThrow())
-                .collect(Collectors.toList());
+        return questionRepository.getAll();
 
     }
 
@@ -83,15 +68,9 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public List<ShowQuestionDTO> getAllByUser(Long userId) {
+    public List<ShowQuestionDTO> getAllByUser(User user) {
 
-        List<Question> questions = questionRepository.findAll();
-
-        return questions.stream()
-                .filter(question -> question.getUser().getUserId().equals(userId))
-                .map(q ->mapper.getOptionalQuestionDto(Optional.of(q))
-                        .orElseThrow())
-                .collect(Collectors.toList());
+        return questionRepository.getAllByUser(user);
 
     }
 

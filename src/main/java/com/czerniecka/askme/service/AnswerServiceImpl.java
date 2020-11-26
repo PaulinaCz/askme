@@ -4,7 +4,6 @@ import com.czerniecka.askme.dto.AnswerDTO;
 import com.czerniecka.askme.dto.RatingDTO;
 import com.czerniecka.askme.dto.ShowAnswerDTO;
 import com.czerniecka.askme.exception.CustomException;
-import com.czerniecka.askme.mapper.AnswerToShowAnswerDTO;
 import com.czerniecka.askme.model.Answer;
 import com.czerniecka.askme.model.Question;
 import com.czerniecka.askme.model.Rating;
@@ -19,41 +18,31 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class AnswerServiceImpl implements AnswerService{
 
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
-    private final AnswerToShowAnswerDTO mapper;
 
     @Autowired
-    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository, AnswerToShowAnswerDTO mapper) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
         this.questionRepository = questionRepository;
-        this.mapper = mapper;
     }
 
     @Override
     public Optional<ShowAnswerDTO> getById(Long answerId) {
 
-        Optional<Answer> answerOptional = answerRepository.findById(answerId);
-
-        if(answerOptional.isEmpty()){
-            return Optional.empty();
-        }else{
-            return mapper.getOptionalAnswerDto(answerOptional);
-        }
+        return answerRepository.getOneByAnswerId(answerId);
 
     }
 
     @Override
     public List<ShowAnswerDTO> getAllByQuestionId(Long questionId) {
 
-        List<Answer> answers = answerRepository.getAllByQuestionId(questionId);
-
-        return answers.stream().map(mapper::getAnswerDto).collect(Collectors.toList());
+        return answerRepository.getAllByQuestionId(questionId);
 
     }
 
@@ -115,12 +104,11 @@ public class AnswerServiceImpl implements AnswerService{
 
     @Override
     public List<ShowAnswerDTO> getAllByUser(Long userId) {
-        List<Answer> answers = answerRepository.findAll();
 
-        return answers.stream()
-                .filter(answer -> answer.getUser().getUserId().equals(userId))
-                .map(mapper::getAnswerDto)
-                .collect(Collectors.toList());
+        List<ShowAnswerDTO> answers = answerRepository.findAllByUser(userId);
+
+        return answers;
+
     }
 
     @Override
