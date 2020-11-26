@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
 
-    @Query(value = "SELECT q.questionId, q.user, q.body, q.timeQuestionAsked FROM Question as q")
+    @Query(value = "SELECT q FROM Question as q")
     List<ShowQuestionDTO> getAll();
 
     List<ShowQuestionDTO> getAllByUser(User user);
