@@ -3,16 +3,13 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.TestAuthenticatedUser;
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
-import com.czerniecka.askme.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,23 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class QuestionControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private QuestionService questionService;
-
-    @Autowired
     private TestAuthenticatedUser authUser;
 
     @Autowired
     private QuestionController questionController;
 
-    @Test
-    void shouldReturnEmptyListOfQuestions(){
-
-
-
-    }
 
     @Test
     void shouldReturn404WhenQuestionDoesntExist(){
