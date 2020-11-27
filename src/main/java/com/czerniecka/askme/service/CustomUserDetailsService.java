@@ -1,11 +1,9 @@
 package com.czerniecka.askme.service;
 
 import com.czerniecka.askme.dto.CreateUserDTO;
-import com.czerniecka.askme.exception.CustomException;
 import com.czerniecka.askme.model.User;
 import com.czerniecka.askme.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
