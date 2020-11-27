@@ -3,7 +3,6 @@ package com.czerniecka.askme.controller;
 import com.czerniecka.askme.TestAuthenticatedUser;
 import com.czerniecka.askme.dto.AskQuestionDTO;
 import com.czerniecka.askme.dto.ShowQuestionDTO;
-import com.czerniecka.askme.repository.QuestionRepository;
 import com.czerniecka.askme.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -41,21 +31,13 @@ class QuestionControllerTest {
 
     @Autowired
     private QuestionController questionController;
-//
-//    @Test
-//    void shouldReturnListOfAllQuestions() throws Exception {
-//
-////        List<ShowQuestionDTO> all = List.of(new ShowQuestionDTO(),
-////                new ShowQuestionDTO(), new ShowQuestionDTO());
-//
-//        when(questionService.getAll()).thenReturn(all);
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/questions/allQuestions"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(all.size())))
-//                .andExpect(status().isOk());
-//
-//
-//    }
+
+    @Test
+    void shouldReturnEmptyListOfQuestions(){
+
+
+
+    }
 
     @Test
     void shouldReturn404WhenQuestionDoesntExist(){
@@ -70,20 +52,12 @@ class QuestionControllerTest {
     void shouldSendQuestionWhenAuthenticatedUser(){
 
         AskQuestionDTO question = new AskQuestionDTO();
-
         question.body = "Asking question?";
-
         UserDetails user = authUser.authenticatedUser("john", "Password123.");
 
         ResponseEntity<Long> response = questionController.sendQuestion(question, user);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-//        Long questionId = response.getBody();
-//        ResponseEntity<ShowQuestionDTO> questionById = questionController.getQuestionById(questionId);
-//        assertEquals(HttpStatus.OK, questionById.getStatusCode());
-//        ShowQuestionDTO qDTO = questionById.getBody();
-//        assertEquals(user.getUsername(), qDTO.userDto.username);
-
+       assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
     }
     
@@ -103,8 +77,6 @@ class QuestionControllerTest {
         ResponseEntity<String> wrongResponseEntity = questionController.editQuestion(questionId, edit, wrongUser);
         assertEquals(HttpStatus.BAD_REQUEST, wrongResponseEntity.getStatusCode());
 
-//        ResponseEntity<String> editResponseEntity = questionController.editQuestion(questionId, edit, user);
-//        assertEquals(HttpStatus.CREATED, editResponseEntity.getStatusCode());
 
     }
 }
