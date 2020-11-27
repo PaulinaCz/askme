@@ -43,14 +43,18 @@ public class QuestionController {
     @GetMapping("/forUser/{userId}")
     public ResponseEntity<List<ShowQuestionDTO>> getQuestionsByUser(@PathVariable Long userId){
 
-        User user = userRepository.findById(userId).get();
-        List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(user);
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent()){
+            return new ResponseEntity("User " + userId + " not found", HttpStatus.BAD_REQUEST);
+        }else{
+            List<ShowQuestionDTO> questionsByUser = questionService.getAllByUser(user.get());
 
-        if(questionsByUser.isEmpty()){
-            return new ResponseEntity("No question found for user  " + userId , HttpStatus.NOT_FOUND);
+            if(questionsByUser.isEmpty()){
+                return new ResponseEntity("No question found for user  " + userId , HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(questionsByUser, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(questionsByUser, HttpStatus.OK);
 
     }
 
