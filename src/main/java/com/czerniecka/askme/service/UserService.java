@@ -4,6 +4,6 @@ import com.czerniecka.askme.dto.CreateUserDTO;
 
 public interface UserService {
 
-    void register(CreateUserDTO userDTO);
+    boolean register(CreateUserDTO userDTO);
 
 }

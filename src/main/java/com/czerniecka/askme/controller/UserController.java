@@ -25,8 +25,11 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Valid @RequestBody CreateUserDTO userDTO){
-        userService.register(userDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if(!userService.register(userDTO)){
+            return new ResponseEntity("User " + userDTO.username + " already exists", HttpStatus.CONFLICT);
+        }else{
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
 }

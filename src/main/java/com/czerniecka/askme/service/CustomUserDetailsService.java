@@ -33,16 +33,17 @@ public class CustomUserDetailsService implements UserDetailsService, UserService
     }
 
     @Override
-    public void register(CreateUserDTO userDTO){
+    public boolean register(CreateUserDTO userDTO){
         String hashedPassword = passwordEncoder.encode(userDTO.password);
 
         Optional<User> notUniqueUsername = userRepository.findByUsername(userDTO.username);
         if(notUniqueUsername.isPresent())
         {
-            throw new CustomException("Username " + userDTO.username + " already exists", HttpStatus.CONFLICT);
+            return false;
         }else {
             User user = new User(userDTO.name, userDTO.surname, userDTO.username, userDTO.email, hashedPassword);
             userRepository.save(user);
+            return true;
         }
     }
 }
