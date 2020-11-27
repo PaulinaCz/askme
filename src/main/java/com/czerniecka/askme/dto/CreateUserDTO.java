@@ -1,8 +1,5 @@
 package com.czerniecka.askme.dto;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -18,7 +15,7 @@ public class CreateUserDTO {
     @Size(min = 3, message = "Surname must be longer than 3 characters")
     public String surname;
 
-    @NotBlank(message = "Please provide a surname")
+    @NotBlank(message = "Please provide username")
     @Size(min = 3, message = "Username must be longer than 3 characters")
     public String username;
 
