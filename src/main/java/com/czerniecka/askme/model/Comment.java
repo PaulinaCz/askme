@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,15 +13,21 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
+    @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    private Long userId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "answer_id")
+    private Answer answer;
+
+    @ManyToOne
+    private User user;
     private String body;
     private LocalDateTime dateCommentCreated;
 
-    public Comment(Long userId, String body) {
-        this.userId = userId;
+    public Comment(User user, String body) {
+        this.user = user;
         this.body = body;
         this.dateCommentCreated = LocalDateTime.now();
     }

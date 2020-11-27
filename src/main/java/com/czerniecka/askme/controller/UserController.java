@@ -1,51 +1,36 @@
 package com.czerniecka.askme.controller;
 
 import com.czerniecka.askme.dto.CreateUserDTO;
-import com.czerniecka.askme.dto.ShowUserDTO;
-import com.czerniecka.askme.service.UserService;
+import com.czerniecka.askme.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
+
+    private CustomUserDetailsService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(CustomUserDetailsService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<ShowUserDTO> getUserById(@PathVariable Long userId){
-        Optional<ShowUserDTO> user = userService.getById(userId);
-        return user.map(showUserDTO -> new ResponseEntity<>(showUserDTO, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
 
-    @GetMapping("/allUsers")
-    public ResponseEntity<List<ShowUserDTO>> getAllUsers(){
-
-        List<ShowUserDTO> allUsers = userService.getAllUsers();
-
-        if(allUsers.isEmpty()){
-            return new ResponseEntity("No users found", HttpStatus.NOT_FOUND);
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@Valid @RequestBody CreateUserDTO userDTO){
+        if(!userService.register(userDTO)){
+            return new ResponseEntity("User " + userDTO.username + " already exists", HttpStatus.CONFLICT);
+        }else{
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
-
-        return new ResponseEntity<>(allUsers, HttpStatus.OK);
-
     }
 
-    @PostMapping
-    public ResponseEntity<CreateUserDTO> createUser(@Valid @RequestBody CreateUserDTO userDTO){
-        userService.createUser(userDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 }
+
