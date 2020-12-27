@@ -10,7 +10,7 @@ Functionality:
 - Add/delete answers.
 - Add comments.
 - Rate answers.
-- Dispaly filtered data for logged in users.
+- Display filtered data for logged in users.
 
 Technologies:
 - Spring Boot, Hibernate, REST,
